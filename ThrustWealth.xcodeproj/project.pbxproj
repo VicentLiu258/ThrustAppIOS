@@ -1,0 +1,494 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		822F5E1619784627AA96322D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5B67279D4244E998756BAE /* ContentView.swift */; };
+		4F8E2147320B415D9C292330 /* AppPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A8A09E95614535AB1F28FC /* AppPreferences.swift */; };
+		7D4A831207414628BC2D6F2E /* CalculationRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F34D9C75B24587ADEDE2A5 /* CalculationRecord.swift */; };
+		F64D550E60D54351BCDACDC1 /* Instrument.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF23C6953F994117AA2E381C /* Instrument.swift */; };
+		9C9202F2573C412294FB4853 /* TradeEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F0740A97E41E080C672C0 /* TradeEntry.swift */; };
+		9A3B216A257F4F1E9900B9AE /* CalculatorEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD029FDDCF24EF8B85DB7C0 /* CalculatorEngine.swift */; };
+		75EE8F91BEAF4D4E8CE48173 /* CalculatorEngineSelfTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DC52EE836948A4B5712975 /* CalculatorEngineSelfTest.swift */; };
+		4BA033DEEBFC4A2CAF7FF4E6 /* ExportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C9E8A307914C86BF92B8FC /* ExportService.swift */; };
+		BE908C72259547D08D1BBFC0 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50EC9B30CA0C4731ABD7F327 /* StorageService.swift */; };
+		0CDB0D6D90F5422D8E7A4C14 /* ColorTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7DB54FBEEA4FC598E6E115 /* ColorTheme.swift */; };
+		DCA32E3CD3E64F14B897BC72 /* DesignTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DC11F4B6304A21A7468AA1 /* DesignTokens.swift */; };
+		28963A4D1483461CB6381782 /* ThrustWealthApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CAC4D10335B43ABB75F60AE /* ThrustWealthApp.swift */; };
+		6599D25F64D2428A927A27DE /* CalculatorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF52EC03E9D4584B7E547B5 /* CalculatorViewModel.swift */; };
+		B1FDD2AEDC314286A4B15BF0 /* HistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A9F627C1104DC39244BB0A /* HistoryViewModel.swift */; };
+		C68B18498A9440879AFB307F /* JournalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B6B824196046D0A78B4532 /* JournalViewModel.swift */; };
+		94E1E41D598048C1B1B5023C /* MarketSpecsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D25D46A690C4EF6A85F9A5F /* MarketSpecsViewModel.swift */; };
+		944F30F44E7B4986833117E7 /* PLCalculatorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE29C8F85F14B86965A1ABB /* PLCalculatorViewModel.swift */; };
+		B6A95E6B5FD447C28010F629 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD6D993B2344D10B02F4776 /* SettingsViewModel.swift */; };
+		E8C656941C4343368A4808AD /* CalculatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45493416F8204E58B262142D /* CalculatorView.swift */; };
+		FAE46E2161E144B58941032E /* QuickSymbolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374948A4A58B444784629326 /* QuickSymbolBar.swift */; };
+		38925FB711A9440B8449EA3A /* ResultShowcaseCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1AFBF58BB5D4C91901702B8 /* ResultShowcaseCard.swift */; };
+		7C8241CB577F4FF29D67065A /* SymbolPickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8D222CCECF47B6AAA28CB0 /* SymbolPickerSheet.swift */; };
+		47324998268742DD99B1FB4A /* ComplianceDisclaimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4A708DCD994DDDBEBA9F2F /* ComplianceDisclaimer.swift */; };
+		14A03091BA7D4214A9BFBE42 /* ConfirmDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1197118FEE04D16AF51AD78 /* ConfirmDialog.swift */; };
+		7224B0356686496790C1BCE8 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C456846BAC544229153DA01 /* EmptyStateView.swift */; };
+		CFE32DC4EAD34BC6B5F446E1 /* FormInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EAB90CA69EE427889AB7758 /* FormInputField.swift */; };
+		DF357E3DFBC843DFB9978531 /* PresetPillsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FC32F4A5E8437B9FCCB05D /* PresetPillsRow.swift */; };
+		CD4CC0724DF44AACA7F462E3 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3CE12C8394410BB955DD1C /* SearchBar.swift */; };
+		66EA4173C9BB4157A3B40430 /* SegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 312EE80D3C2447B38C8BE80B /* SegmentedControl.swift */; };
+		0637DE5918DD43D6B4DE5B68 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8109E99255E4FBF873AEC5C /* HistoryView.swift */; };
+		F7686702C9034987942475B7 /* AddTradeSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AB5907408147D49729D367 /* AddTradeSheet.swift */; };
+		6954A5B57B9C4721B5844294 /* JournalSummaryGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D24E27EC2C41B6ABC36576 /* JournalSummaryGrid.swift */; };
+		0A25B5E886C64F1E9FE97FDA /* TradeJournalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C5DEF9579142559B83115D /* TradeJournalView.swift */; };
+		4EF2F619E7754CAD9CA1CB93 /* LegalTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91242410E95A459EA3814CDE /* LegalTextView.swift */; };
+		00E8BD7C5D834FEC987F8357 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3DB7E148CA454D886F4116 /* SettingsView.swift */; };
+		EB8E2DB68426491CAE4747DD /* CustomSpecSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10A20731728F409AA1903C25 /* CustomSpecSheet.swift */; };
+		AA3AFFA281754686A3D159B8 /* MarketSpecsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E28B120C2A4C0B9C198965 /* MarketSpecsView.swift */; };
+		051F69743F204FEFBE60CD33 /* PLCalculatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3613983E984E4D268A13CDF8 /* PLCalculatorView.swift */; };
+		97D74A9988544ADFBDF25D0F /* SpecDetailSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5508A06CC1E44CAABCD1E9AC /* SpecDetailSheet.swift */; };
+		14F5B6F086EA4A9E9B86BB76 /* ToolsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831C2681060E413CA917301E /* ToolsListView.swift */; };
+		C50C4860A022452C90F88AF7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8AB7432B7774C13B1F5925C /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		3036302F2FFD406CA34300FB /* ThrustWealth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ThrustWealth.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9B5B67279D4244E998756BAE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		C7A8A09E95614535AB1F28FC /* AppPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPreferences.swift; sourceTree = "<group>"; };
+		E9F34D9C75B24587ADEDE2A5 /* CalculationRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculationRecord.swift; sourceTree = "<group>"; };
+		EF23C6953F994117AA2E381C /* Instrument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Instrument.swift; sourceTree = "<group>"; };
+		149F0740A97E41E080C672C0 /* TradeEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradeEntry.swift; sourceTree = "<group>"; };
+		AFD029FDDCF24EF8B85DB7C0 /* CalculatorEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorEngine.swift; sourceTree = "<group>"; };
+		B2DC52EE836948A4B5712975 /* CalculatorEngineSelfTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorEngineSelfTest.swift; sourceTree = "<group>"; };
+		E3C9E8A307914C86BF92B8FC /* ExportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportService.swift; sourceTree = "<group>"; };
+		50EC9B30CA0C4731ABD7F327 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
+		2D7DB54FBEEA4FC598E6E115 /* ColorTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTheme.swift; sourceTree = "<group>"; };
+		34DC11F4B6304A21A7468AA1 /* DesignTokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignTokens.swift; sourceTree = "<group>"; };
+		1CAC4D10335B43ABB75F60AE /* ThrustWealthApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThrustWealthApp.swift; sourceTree = "<group>"; };
+		FBF52EC03E9D4584B7E547B5 /* CalculatorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorViewModel.swift; sourceTree = "<group>"; };
+		E5A9F627C1104DC39244BB0A /* HistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewModel.swift; sourceTree = "<group>"; };
+		08B6B824196046D0A78B4532 /* JournalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalViewModel.swift; sourceTree = "<group>"; };
+		7D25D46A690C4EF6A85F9A5F /* MarketSpecsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketSpecsViewModel.swift; sourceTree = "<group>"; };
+		EEE29C8F85F14B86965A1ABB /* PLCalculatorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLCalculatorViewModel.swift; sourceTree = "<group>"; };
+		EAD6D993B2344D10B02F4776 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		45493416F8204E58B262142D /* CalculatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorView.swift; sourceTree = "<group>"; };
+		374948A4A58B444784629326 /* QuickSymbolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSymbolBar.swift; sourceTree = "<group>"; };
+		F1AFBF58BB5D4C91901702B8 /* ResultShowcaseCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultShowcaseCard.swift; sourceTree = "<group>"; };
+		EA8D222CCECF47B6AAA28CB0 /* SymbolPickerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolPickerSheet.swift; sourceTree = "<group>"; };
+		FD4A708DCD994DDDBEBA9F2F /* ComplianceDisclaimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplianceDisclaimer.swift; sourceTree = "<group>"; };
+		C1197118FEE04D16AF51AD78 /* ConfirmDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmDialog.swift; sourceTree = "<group>"; };
+		5C456846BAC544229153DA01 /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
+		1EAB90CA69EE427889AB7758 /* FormInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormInputField.swift; sourceTree = "<group>"; };
+		A1FC32F4A5E8437B9FCCB05D /* PresetPillsRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetPillsRow.swift; sourceTree = "<group>"; };
+		DC3CE12C8394410BB955DD1C /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
+		312EE80D3C2447B38C8BE80B /* SegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControl.swift; sourceTree = "<group>"; };
+		C8109E99255E4FBF873AEC5C /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+		30AB5907408147D49729D367 /* AddTradeSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTradeSheet.swift; sourceTree = "<group>"; };
+		97D24E27EC2C41B6ABC36576 /* JournalSummaryGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalSummaryGrid.swift; sourceTree = "<group>"; };
+		75C5DEF9579142559B83115D /* TradeJournalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradeJournalView.swift; sourceTree = "<group>"; };
+		91242410E95A459EA3814CDE /* LegalTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegalTextView.swift; sourceTree = "<group>"; };
+		EF3DB7E148CA454D886F4116 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		10A20731728F409AA1903C25 /* CustomSpecSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSpecSheet.swift; sourceTree = "<group>"; };
+		F3E28B120C2A4C0B9C198965 /* MarketSpecsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketSpecsView.swift; sourceTree = "<group>"; };
+		3613983E984E4D268A13CDF8 /* PLCalculatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLCalculatorView.swift; sourceTree = "<group>"; };
+		5508A06CC1E44CAABCD1E9AC /* SpecDetailSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecDetailSheet.swift; sourceTree = "<group>"; };
+		831C2681060E413CA917301E /* ToolsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsListView.swift; sourceTree = "<group>"; };
+		F8AB7432B7774C13B1F5925C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8C183CD0A27D4AADAB59E177 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0C51F8057D064115B3303EC9 = {
+			isa = PBXGroup;
+			children = (
+				B01B15F6FFC047E5A0596776 /* ThrustWealth */,
+				ABF14D6C31914ACB9C7DA403 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		ABF14D6C31914ACB9C7DA403 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3036302F2FFD406CA34300FB /* ThrustWealth.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B01B15F6FFC047E5A0596776 /* ThrustWealth */ = {
+			isa = PBXGroup;
+			children = (
+				210D28BD1034480E83B4EC4A /* Models */,
+				0DA68924923F4A598BC5BA7C /* ViewModels */,
+				695F71A680604E71B4AA63E2 /* Views */,
+				4A3A927CCB074E7FBBB39199 /* Services */,
+				BB3F37BF51424A5E8B56242F /* Theme */,
+				9B5B67279D4244E998756BAE /* ContentView.swift */,
+				1CAC4D10335B43ABB75F60AE /* ThrustWealthApp.swift */,
+				F8AB7432B7774C13B1F5925C /* Assets.xcassets */,
+			);
+			path = ThrustWealth;
+			sourceTree = "<group>";
+		};
+		210D28BD1034480E83B4EC4A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C7A8A09E95614535AB1F28FC /* AppPreferences.swift */,
+				E9F34D9C75B24587ADEDE2A5 /* CalculationRecord.swift */,
+				EF23C6953F994117AA2E381C /* Instrument.swift */,
+				149F0740A97E41E080C672C0 /* TradeEntry.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		0DA68924923F4A598BC5BA7C /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				FBF52EC03E9D4584B7E547B5 /* CalculatorViewModel.swift */,
+				E5A9F627C1104DC39244BB0A /* HistoryViewModel.swift */,
+				08B6B824196046D0A78B4532 /* JournalViewModel.swift */,
+				7D25D46A690C4EF6A85F9A5F /* MarketSpecsViewModel.swift */,
+				EEE29C8F85F14B86965A1ABB /* PLCalculatorViewModel.swift */,
+				EAD6D993B2344D10B02F4776 /* SettingsViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		695F71A680604E71B4AA63E2 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5852011B92DC4545ACA085F1 /* Calculator */,
+				B8A457BB72794E1E8697ED14 /* Tools */,
+				06F559A6AB104C3AA0BF724A /* Journal */,
+				16855E7F6A6B41AABAB777A1 /* History */,
+				0F0FC39CA9EB47BEB43DA77D /* Settings */,
+				A127311797794C4F91CFE6D1 /* Components */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		5852011B92DC4545ACA085F1 /* Calculator */ = {
+			isa = PBXGroup;
+			children = (
+				45493416F8204E58B262142D /* CalculatorView.swift */,
+				374948A4A58B444784629326 /* QuickSymbolBar.swift */,
+				F1AFBF58BB5D4C91901702B8 /* ResultShowcaseCard.swift */,
+				EA8D222CCECF47B6AAA28CB0 /* SymbolPickerSheet.swift */,
+			);
+			path = Calculator;
+			sourceTree = "<group>";
+		};
+		B8A457BB72794E1E8697ED14 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				10A20731728F409AA1903C25 /* CustomSpecSheet.swift */,
+				F3E28B120C2A4C0B9C198965 /* MarketSpecsView.swift */,
+				3613983E984E4D268A13CDF8 /* PLCalculatorView.swift */,
+				5508A06CC1E44CAABCD1E9AC /* SpecDetailSheet.swift */,
+				831C2681060E413CA917301E /* ToolsListView.swift */,
+			);
+			path = Tools;
+			sourceTree = "<group>";
+		};
+		06F559A6AB104C3AA0BF724A /* Journal */ = {
+			isa = PBXGroup;
+			children = (
+				30AB5907408147D49729D367 /* AddTradeSheet.swift */,
+				97D24E27EC2C41B6ABC36576 /* JournalSummaryGrid.swift */,
+				75C5DEF9579142559B83115D /* TradeJournalView.swift */,
+			);
+			path = Journal;
+			sourceTree = "<group>";
+		};
+		16855E7F6A6B41AABAB777A1 /* History */ = {
+			isa = PBXGroup;
+			children = (
+				C8109E99255E4FBF873AEC5C /* HistoryView.swift */,
+			);
+			path = History;
+			sourceTree = "<group>";
+		};
+		0F0FC39CA9EB47BEB43DA77D /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				91242410E95A459EA3814CDE /* LegalTextView.swift */,
+				EF3DB7E148CA454D886F4116 /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		A127311797794C4F91CFE6D1 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				FD4A708DCD994DDDBEBA9F2F /* ComplianceDisclaimer.swift */,
+				C1197118FEE04D16AF51AD78 /* ConfirmDialog.swift */,
+				5C456846BAC544229153DA01 /* EmptyStateView.swift */,
+				1EAB90CA69EE427889AB7758 /* FormInputField.swift */,
+				A1FC32F4A5E8437B9FCCB05D /* PresetPillsRow.swift */,
+				DC3CE12C8394410BB955DD1C /* SearchBar.swift */,
+				312EE80D3C2447B38C8BE80B /* SegmentedControl.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		4A3A927CCB074E7FBBB39199 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				AFD029FDDCF24EF8B85DB7C0 /* CalculatorEngine.swift */,
+				B2DC52EE836948A4B5712975 /* CalculatorEngineSelfTest.swift */,
+				E3C9E8A307914C86BF92B8FC /* ExportService.swift */,
+				50EC9B30CA0C4731ABD7F327 /* StorageService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		BB3F37BF51424A5E8B56242F /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				2D7DB54FBEEA4FC598E6E115 /* ColorTheme.swift */,
+				34DC11F4B6304A21A7468AA1 /* DesignTokens.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A87CB73680854B64A6168612 /* ThrustWealth */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FC2B642F906242BA8BDACE04 /* Build configuration list for PBXNativeTarget "ThrustWealth" */;
+			buildPhases = (
+				452EA3508EC242EC9B01C450 /* Sources */,
+				8C183CD0A27D4AADAB59E177 /* Frameworks */,
+				43E12B2EAF15460A80B2D7EA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ThrustWealth;
+			productName = ThrustWealth;
+			productReference = 3036302F2FFD406CA34300FB /* ThrustWealth.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BA432290BD41444DA2C2D55E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					A87CB73680854B64A6168612 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+				};
+			};
+			buildConfigurationList = 2190BD7F7F32472FB822D405 /* Build configuration list for PBXProject "ThrustWealth" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 0C51F8057D064115B3303EC9;
+			productRefGroup = ABF14D6C31914ACB9C7DA403 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A87CB73680854B64A6168612 /* ThrustWealth */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		43E12B2EAF15460A80B2D7EA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C50C4860A022452C90F88AF7 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		452EA3508EC242EC9B01C450 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				822F5E1619784627AA96322D /* ContentView.swift in Sources */,
+				4F8E2147320B415D9C292330 /* AppPreferences.swift in Sources */,
+				7D4A831207414628BC2D6F2E /* CalculationRecord.swift in Sources */,
+				F64D550E60D54351BCDACDC1 /* Instrument.swift in Sources */,
+				9C9202F2573C412294FB4853 /* TradeEntry.swift in Sources */,
+				9A3B216A257F4F1E9900B9AE /* CalculatorEngine.swift in Sources */,
+				75EE8F91BEAF4D4E8CE48173 /* CalculatorEngineSelfTest.swift in Sources */,
+				4BA033DEEBFC4A2CAF7FF4E6 /* ExportService.swift in Sources */,
+				BE908C72259547D08D1BBFC0 /* StorageService.swift in Sources */,
+				0CDB0D6D90F5422D8E7A4C14 /* ColorTheme.swift in Sources */,
+				DCA32E3CD3E64F14B897BC72 /* DesignTokens.swift in Sources */,
+				28963A4D1483461CB6381782 /* ThrustWealthApp.swift in Sources */,
+				6599D25F64D2428A927A27DE /* CalculatorViewModel.swift in Sources */,
+				B1FDD2AEDC314286A4B15BF0 /* HistoryViewModel.swift in Sources */,
+				C68B18498A9440879AFB307F /* JournalViewModel.swift in Sources */,
+				94E1E41D598048C1B1B5023C /* MarketSpecsViewModel.swift in Sources */,
+				944F30F44E7B4986833117E7 /* PLCalculatorViewModel.swift in Sources */,
+				B6A95E6B5FD447C28010F629 /* SettingsViewModel.swift in Sources */,
+				E8C656941C4343368A4808AD /* CalculatorView.swift in Sources */,
+				FAE46E2161E144B58941032E /* QuickSymbolBar.swift in Sources */,
+				38925FB711A9440B8449EA3A /* ResultShowcaseCard.swift in Sources */,
+				7C8241CB577F4FF29D67065A /* SymbolPickerSheet.swift in Sources */,
+				47324998268742DD99B1FB4A /* ComplianceDisclaimer.swift in Sources */,
+				14A03091BA7D4214A9BFBE42 /* ConfirmDialog.swift in Sources */,
+				7224B0356686496790C1BCE8 /* EmptyStateView.swift in Sources */,
+				CFE32DC4EAD34BC6B5F446E1 /* FormInputField.swift in Sources */,
+				DF357E3DFBC843DFB9978531 /* PresetPillsRow.swift in Sources */,
+				CD4CC0724DF44AACA7F462E3 /* SearchBar.swift in Sources */,
+				66EA4173C9BB4157A3B40430 /* SegmentedControl.swift in Sources */,
+				0637DE5918DD43D6B4DE5B68 /* HistoryView.swift in Sources */,
+				F7686702C9034987942475B7 /* AddTradeSheet.swift in Sources */,
+				6954A5B57B9C4721B5844294 /* JournalSummaryGrid.swift in Sources */,
+				0A25B5E886C64F1E9FE97FDA /* TradeJournalView.swift in Sources */,
+				4EF2F619E7754CAD9CA1CB93 /* LegalTextView.swift in Sources */,
+				00E8BD7C5D834FEC987F8357 /* SettingsView.swift in Sources */,
+				EB8E2DB68426491CAE4747DD /* CustomSpecSheet.swift in Sources */,
+				AA3AFFA281754686A3D159B8 /* MarketSpecsView.swift in Sources */,
+				051F69743F204FEFBE60CD33 /* PLCalculatorView.swift in Sources */,
+				97D74A9988544ADFBDF25D0F /* SpecDetailSheet.swift in Sources */,
+				14F5B6F086EA4A9E9B86BB76 /* ToolsListView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		99FC30D89F3F48FB95009ABC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		584D1A9325144CF2ABB81198 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+		C72ABD44A0B645C2933E587E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Thrust Wealth";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.thrustwealth.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		064ABB754454443AAA3A6E46 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Thrust Wealth";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.thrustwealth.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2190BD7F7F32472FB822D405 /* Build configuration list for PBXProject "ThrustWealth" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				99FC30D89F3F48FB95009ABC /* Debug */,
+				584D1A9325144CF2ABB81198 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FC2B642F906242BA8BDACE04 /* Build configuration list for PBXNativeTarget "ThrustWealth" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C72ABD44A0B645C2933E587E /* Debug */,
+				064ABB754454443AAA3A6E46 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BA432290BD41444DA2C2D55E /* Project object */;
+}

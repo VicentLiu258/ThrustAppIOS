@@ -1,0 +1,53 @@
+import SwiftUI
+
+struct ContentView: View {
+    @EnvironmentObject private var appState: AppState
+    @State private var selectedTab: AppTab = .calculator
+
+    var body: some View {
+        TabView(selection: $selectedTab) {
+            NavigationStack {
+                CalculatorView()
+            }
+            .tabItem {
+                Label("Calculator", systemImage: "function")
+            }
+            .tag(AppTab.calculator)
+
+            NavigationStack {
+                ToolsListView()
+            }
+            .tabItem {
+                Label("Tools", systemImage: "square.grid.2x2")
+            }
+            .tag(AppTab.tools)
+
+            NavigationStack {
+                TradeJournalView()
+            }
+            .tabItem {
+                Label("Journal", systemImage: "book")
+            }
+            .tag(AppTab.journal)
+
+            NavigationStack {
+                SettingsView()
+            }
+            .tabItem {
+                Label("Settings", systemImage: "gearshape")
+            }
+            .tag(AppTab.settings)
+        }
+        .tint(Theme.Colors.brandPrimary)
+        .thrustTheme()
+    }
+}
+
+enum AppTab: Hashable {
+    case calculator, tools, journal, settings
+}
+
+#Preview {
+    ContentView()
+        .environmentObject(AppState())
+}
