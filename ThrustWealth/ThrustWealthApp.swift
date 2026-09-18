@@ -3,6 +3,10 @@ import SwiftUI
 @main
 struct ThrustWealthApp: App {
     @StateObject private var appState = AppState()
+    @StateObject private var chatService = ChatService.shared
+    @Environment(\.scenePhase) private var scenePhase
+
+    @State private var showPrivacySheet = false
 
     init() {
         #if DEBUG
@@ -12,10 +16,47 @@ struct ThrustWealthApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environmentObject(appState)
-                .preferredColorScheme(appState.preferences.theme.colorScheme)
+            ZStack {
+                ContentView()
+                    .environmentObject(appState)
+                    .environmentObject(chatService)
+                    .preferredColorScheme(appState.preferences.theme.colorScheme)
+                    .opacity(appState.preferences.privacyConsentAccepted ? 1 : 0)
+                    .allowsHitTesting(appState.preferences.privacyConsentAccepted)
+
+                if !appState.preferences.privacyConsentAccepted {
+                    PrivacyConsentView(
+                        onAccept: acceptPrivacy,
+                        onViewPrivacy: { showPrivacySheet = true }
+                    )
+                    .preferredColorScheme(appState.preferences.theme.colorScheme)
+                    .transition(.opacity)
+                }
+            }
+            .sheet(isPresented: $showPrivacySheet) {
+                LegalTextView(kind: .privacy)
+            }
+            .task(id: appState.preferences.privacyConsentAccepted) {
+                await chatService.initializeIfAllowed(
+                    privacyConsentAccepted: appState.preferences.privacyConsentAccepted
+                )
+            }
+            .onChange(of: scenePhase) { _, phase in
+                switch phase {
+                case .active:
+                    chatService.setWindowVisible(true)
+                case .background, .inactive:
+                    chatService.setWindowVisible(false)
+                @unknown default:
+                    break
+                }
+            }
         }
+    }
+
+    private func acceptPrivacy() {
+        appState.preferences.privacyConsentAccepted = true
+        appState.savePreferences()
     }
 }
 

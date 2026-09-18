@@ -47,6 +47,11 @@
 		97D74A9988544ADFBDF25D0F /* SpecDetailSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5508A06CC1E44CAABCD1E9AC /* SpecDetailSheet.swift */; };
 		14F5B6F086EA4A9E9B86BB76 /* ToolsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831C2681060E413CA917301E /* ToolsListView.swift */; };
 		C50C4860A022452C90F88AF7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8AB7432B7774C13B1F5925C /* Assets.xcassets */; };
+		A1B2C3D4E5F6000100000001 /* ChatConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6000100000002 /* ChatConfig.swift */; };
+		A1B2C3D4E5F6000100000003 /* ChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6000100000004 /* ChatService.swift */; };
+		A1B2C3D4E5F6000100000005 /* PrivacyConsentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6000100000006 /* PrivacyConsentView.swift */; };
+		A1B2C3D4E5F6000100000007 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6000100000008 /* PrivacyInfo.xcprivacy */; };
+		A1B2C3D4E5F6000100000009 /* SalesmartlyChat in Frameworks */ = {isa = PBXBuildFile; productRef = A1B2C3D4E5F600010000000A /* SalesmartlyChat */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -92,6 +97,10 @@
 		5508A06CC1E44CAABCD1E9AC /* SpecDetailSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecDetailSheet.swift; sourceTree = "<group>"; };
 		831C2681060E413CA917301E /* ToolsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsListView.swift; sourceTree = "<group>"; };
 		F8AB7432B7774C13B1F5925C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A1B2C3D4E5F6000100000002 /* ChatConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatConfig.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F6000100000004 /* ChatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatService.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F6000100000006 /* PrivacyConsentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyConsentView.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F6000100000008 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +108,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1B2C3D4E5F6000100000009 /* SalesmartlyChat in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -131,6 +141,7 @@
 				BB3F37BF51424A5E8B56242F /* Theme */,
 				9B5B67279D4244E998756BAE /* ContentView.swift */,
 				1CAC4D10335B43ABB75F60AE /* ThrustWealthApp.swift */,
+				A1B2C3D4E5F6000100000008 /* PrivacyInfo.xcprivacy */,
 				F8AB7432B7774C13B1F5925C /* Assets.xcassets */,
 			);
 			path = ThrustWealth;
@@ -231,6 +242,7 @@
 				5C456846BAC544229153DA01 /* EmptyStateView.swift */,
 				1EAB90CA69EE427889AB7758 /* FormInputField.swift */,
 				A1FC32F4A5E8437B9FCCB05D /* PresetPillsRow.swift */,
+				A1B2C3D4E5F6000100000006 /* PrivacyConsentView.swift */,
 				DC3CE12C8394410BB955DD1C /* SearchBar.swift */,
 				312EE80D3C2447B38C8BE80B /* SegmentedControl.swift */,
 			);
@@ -242,6 +254,8 @@
 			children = (
 				AFD029FDDCF24EF8B85DB7C0 /* CalculatorEngine.swift */,
 				B2DC52EE836948A4B5712975 /* CalculatorEngineSelfTest.swift */,
+				A1B2C3D4E5F6000100000002 /* ChatConfig.swift */,
+				A1B2C3D4E5F6000100000004 /* ChatService.swift */,
 				E3C9E8A307914C86BF92B8FC /* ExportService.swift */,
 				50EC9B30CA0C4731ABD7F327 /* StorageService.swift */,
 			);
@@ -273,6 +287,9 @@
 			dependencies = (
 			);
 			name = ThrustWealth;
+			packageProductDependencies = (
+				A1B2C3D4E5F600010000000A /* SalesmartlyChat */,
+			);
 			productName = ThrustWealth;
 			productReference = 3036302F2FFD406CA34300FB /* ThrustWealth.app */;
 			productType = "com.apple.product-type.application";
@@ -301,6 +318,9 @@
 				Base,
 			);
 			mainGroup = 0C51F8057D064115B3303EC9;
+			packageReferences = (
+				A1B2C3D4E5F600010000000B /* XCRemoteSwiftPackageReference "Mobile-SDK" */,
+			);
 			productRefGroup = ABF14D6C31914ACB9C7DA403 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -316,6 +336,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C50C4860A022452C90F88AF7 /* Assets.xcassets in Resources */,
+				A1B2C3D4E5F6000100000007 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -366,6 +387,9 @@
 				051F69743F204FEFBE60CD33 /* PLCalculatorView.swift in Sources */,
 				97D74A9988544ADFBDF25D0F /* SpecDetailSheet.swift in Sources */,
 				14F5B6F086EA4A9E9B86BB76 /* ToolsListView.swift in Sources */,
+				A1B2C3D4E5F6000100000001 /* ChatConfig.swift in Sources */,
+				A1B2C3D4E5F6000100000003 /* ChatService.swift in Sources */,
+				A1B2C3D4E5F6000100000005 /* PrivacyConsentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -489,6 +513,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A1B2C3D4E5F600010000000B /* XCRemoteSwiftPackageReference "Mobile-SDK" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SaleSmartly-Mobile/Mobile-SDK";
+			requirement = {
+				kind = exactVersion;
+				version = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A1B2C3D4E5F600010000000A /* SalesmartlyChat */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A1B2C3D4E5F600010000000B /* XCRemoteSwiftPackageReference "Mobile-SDK" */;
+			productName = SalesmartlyChat;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = BA432290BD41444DA2C2D55E /* Project object */;
 }

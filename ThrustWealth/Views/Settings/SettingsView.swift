@@ -2,6 +2,7 @@ import SwiftUI
 
 struct SettingsView: View {
     @EnvironmentObject private var appState: AppState
+    @EnvironmentObject private var chatService: ChatService
     @StateObject private var vm = SettingsViewModel()
     @Environment(\.themed) private var themed
     @Environment(\.colorScheme) private var colorScheme
@@ -9,6 +10,7 @@ struct SettingsView: View {
     @State private var showPrivacy = false
     @State private var showTerms = false
     @State private var showAbout = false
+    @State private var supportToast: String?
 
     var body: some View {
         ZStack {
@@ -61,6 +63,25 @@ struct SettingsView: View {
                         }
                     }
 
+                    settingsGroup(title: "Support") {
+                        interactiveRow("Contact Support") {
+                            openSupportChat()
+                        }
+                        if chatService.unreadCount > 0 {
+                            HStack {
+                                Text("Unread support messages")
+                                    .font(Theme.Fonts.sans(13, weight: .medium))
+                                    .foregroundStyle(themed.textSecondary)
+                                Spacer()
+                                Text("\(chatService.unreadCount)")
+                                    .font(Theme.Fonts.sans(13, weight: .bold))
+                                    .foregroundStyle(Theme.Colors.brandPrimary)
+                            }
+                            .padding(.horizontal, Theme.Spacing.lg)
+                            .padding(.vertical, 12)
+                        }
+                    }
+
                     settingsGroup(title: "Privacy & Compliance") {
                         interactiveRow("Privacy Policy") { showPrivacy = true }
                         interactiveRow("Terms of Service") { showTerms = true }
@@ -87,7 +108,7 @@ struct SettingsView: View {
                 )
             }
 
-            if let toast = vm.toastMessage {
+            if let toast = vm.toastMessage ?? supportToast {
                 VStack {
                     ToastBanner(message: toast).padding(.top, 12)
                     Spacer()
@@ -117,6 +138,38 @@ struct SettingsView: View {
         case "GBP": return "GBP (£)"
         case "JPY": return "JPY (¥)"
         default: return "USD ($)"
+        }
+    }
+
+    private func openSupportChat() {
+        guard appState.preferences.privacyConsentAccepted else {
+            showSupportToast("Please accept the Privacy Policy first.")
+            return
+        }
+        guard ChatConfig.isConfigured else {
+            showSupportToast("Support chat is not configured yet.")
+            return
+        }
+        if chatService.isReady {
+            chatService.openChat()
+        } else if chatService.isInitializing {
+            showSupportToast("Connecting to support…")
+        } else {
+            Task {
+                await chatService.initializeIfAllowed(privacyConsentAccepted: true)
+                if chatService.isReady {
+                    chatService.openChat()
+                } else {
+                    showSupportToast(chatService.lastError ?? "Unable to open support chat.")
+                }
+            }
+        }
+    }
+
+    private func showSupportToast(_ message: String) {
+        supportToast = message
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+            if supportToast == message { supportToast = nil }
         }
     }
 

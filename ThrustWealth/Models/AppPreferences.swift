@@ -6,13 +6,16 @@ struct AppPreferences: Codable, Equatable {
     var defaultLeverage: String
     var lotUnitDisplay: String
     var theme: AppThemeOption
+    /// Required before SaleSmartly SDK initialization (compliance).
+    var privacyConsentAccepted: Bool
 
     static let `default` = AppPreferences(
         accountCurrency: "USD",
         defaultSymbol: "XAUUSD",
         defaultLeverage: "1:100",
         lotUnitDisplay: "Standard",
-        theme: .dark
+        theme: .dark,
+        privacyConsentAccepted: false
     )
 
     static let currencies = ["USD", "EUR", "GBP", "JPY"]
@@ -26,6 +29,37 @@ struct AppPreferences: Codable, Equatable {
         case "JPY": return "¥"
         default: return "$"
         }
+    }
+
+    /// Backward-compatible decoding for preferences saved before privacyConsentAccepted existed.
+    enum CodingKeys: String, CodingKey {
+        case accountCurrency, defaultSymbol, defaultLeverage, lotUnitDisplay, theme, privacyConsentAccepted
+    }
+
+    init(
+        accountCurrency: String,
+        defaultSymbol: String,
+        defaultLeverage: String,
+        lotUnitDisplay: String,
+        theme: AppThemeOption,
+        privacyConsentAccepted: Bool
+    ) {
+        self.accountCurrency = accountCurrency
+        self.defaultSymbol = defaultSymbol
+        self.defaultLeverage = defaultLeverage
+        self.lotUnitDisplay = lotUnitDisplay
+        self.theme = theme
+        self.privacyConsentAccepted = privacyConsentAccepted
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        accountCurrency = try container.decodeIfPresent(String.self, forKey: .accountCurrency) ?? "USD"
+        defaultSymbol = try container.decodeIfPresent(String.self, forKey: .defaultSymbol) ?? "XAUUSD"
+        defaultLeverage = try container.decodeIfPresent(String.self, forKey: .defaultLeverage) ?? "1:100"
+        lotUnitDisplay = try container.decodeIfPresent(String.self, forKey: .lotUnitDisplay) ?? "Standard"
+        theme = try container.decodeIfPresent(AppThemeOption.self, forKey: .theme) ?? .dark
+        privacyConsentAccepted = try container.decodeIfPresent(Bool.self, forKey: .privacyConsentAccepted) ?? false
     }
 }
 

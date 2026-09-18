@@ -15,11 +15,45 @@ struct LegalTextView: View {
                 VStack(alignment: .leading, spacing: 16) {
                     switch kind {
                     case .privacy:
-                        section("Your Privacy", "Thrust Wealth is a standalone offline utility. No trade entries, balance numbers, or calculation parameters are transmitted to any remote servers. All data remains exclusively in your device's local storage.")
-                        section("Data Retention", "You may export or permanently purge all history and journal records at any time from the Settings tab.")
+                        section(
+                            "Your Privacy",
+                            "Thrust Wealth is primarily a standalone offline utility. Trade entries, balance numbers, and calculation parameters are stored on your device and are not uploaded to Thrust Wealth servers."
+                        )
+                        section(
+                            "Data Retention",
+                            "You may export or permanently purge all history and journal records at any time from the Settings tab."
+                        )
+                        section(
+                            "Optional Support Chat (SaleSmartly)",
+                            """
+                            If you use in-app Contact Support, the chat feature is provided by SaleSmartly iOS SDK (Guangzhou Biaopin Software Co., Ltd.).
+
+                            Purpose: online customer support inside the App.
+
+                            Data that may be collected by the SDK for basic chat functionality:
+                            • Device and system information (OS type/version, app bundle ID/version, device type/manufacturer/model, network type)
+                            • Network identity information (IP address)
+
+                            Optional data, collected only when you actively send attachments in chat:
+                            • Images and videos you choose to upload
+
+                            Collection method: collected by the SDK after you agree to this Privacy Policy.
+
+                            Permissions used on iOS:
+                            • User Notifications (optional) — unread support message alerts
+                            • UserDefaults / local storage — session ID and unread counts inside the app sandbox
+                            • Privacy Accessed API Category: NSPrivacyAccessedAPICategoryUserDefaults
+
+                            Official site: https://www.salesmartly.cn
+                            SaleSmartly native SDK privacy policy: https://www.salesmartly.com/html/sdk/privacy_native_cn.html
+
+                            The SDK is initialized only after you tap Agree on the first-launch privacy consent screen. Declining consent keeps calculator features available without support chat networking.
+                            """
+                        )
                     case .terms:
                         section("About This Tool", "Thrust Wealth provides mathematical calculations based on standard contract specifications. It does not provide trade executions, investment recommendations, or portfolio guarantees.")
                         section("Risk of Capital Loss", "Trading financial contracts (Forex, CFDs, precious metals) involves significant market risk. Users are solely responsible for setting appropriate stop-loss orders with their executing brokers.")
+                        section("Support Chat", "In-app support chat is an optional assistance channel. Messages you send may be processed by SaleSmartly and our support staff to respond to your inquiry. Support chat does not constitute investment advice.")
                     case .about:
                         VStack(spacing: 12) {
                             if UIImage(named: "Logo") != nil {

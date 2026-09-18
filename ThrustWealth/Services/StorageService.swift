@@ -10,6 +10,7 @@ final class StorageService {
         static let journal = "thrust_wealth_trade_journal"
         static let customInstruments = "thrust_wealth_custom_instruments"
         static let favorites = "thrust_wealth_favorites"
+        static let guestID = "thrust_wealth_salesmartly_guest_id"
     }
 
     private let defaults = UserDefaults.standard
@@ -223,6 +224,9 @@ final class StorageService {
         defaults.removeObject(forKey: Keys.customInstruments)
         defaults.removeObject(forKey: Keys.preferences)
         defaults.removeObject(forKey: Keys.favorites)
+        // Guest ID is cleared so a fresh SaleSmartly visitor identity is created after purge.
+        defaults.removeObject(forKey: Keys.guestID)
+        ChatService.shared.resetAfterDataPurge()
     }
 
     // MARK: - Full backup payload
