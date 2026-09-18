@@ -67,6 +67,12 @@ struct SettingsView: View {
                         interactiveRow("Contact Support") {
                             openSupportChat()
                         }
+                        settingsToggleRow(
+                            label: "Floating Chat Button on Home",
+                            isOn: $vm.preferences.showHomeChatButton
+                        )
+                        .onChange(of: vm.preferences.showHomeChatButton) { _, _ in vm.save() }
+
                         if chatService.unreadCount > 0 {
                             HStack {
                                 Text("Unread support messages")
@@ -142,28 +148,12 @@ struct SettingsView: View {
     }
 
     private func openSupportChat() {
-        guard appState.preferences.privacyConsentAccepted else {
-            showSupportToast("Please accept the Privacy Policy first.")
-            return
-        }
-        guard ChatConfig.isConfigured else {
-            showSupportToast("Support chat is not configured yet.")
-            return
-        }
-        if chatService.isReady {
-            chatService.openChat()
-        } else if chatService.isInitializing {
-            showSupportToast("Connecting to support…")
-        } else {
-            Task {
-                await chatService.initializeIfAllowed(privacyConsentAccepted: true)
-                if chatService.isReady {
-                    chatService.openChat()
-                } else {
-                    showSupportToast(chatService.lastError ?? "Unable to open support chat.")
-                }
+        chatService.requestOpenChat(
+            privacyConsentAccepted: appState.preferences.privacyConsentAccepted,
+            onToast: { message in
+                showSupportToast(message)
             }
-        }
+        )
     }
 
     private func showSupportToast(_ message: String) {
@@ -188,6 +178,23 @@ struct SettingsView: View {
                     .strokeBorder(themed.borderSubtle, lineWidth: 1)
             )
             .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.lg, style: .continuous))
+        }
+    }
+
+    private func settingsToggleRow(label: String, isOn: Binding<Bool>) -> some View {
+        HStack {
+            Text(label)
+                .font(Theme.Fonts.sans(14, weight: .semibold))
+                .foregroundStyle(themed.textPrimary)
+            Spacer()
+            Toggle("", isOn: isOn)
+                .labelsHidden()
+                .tint(Theme.Colors.brandPrimary)
+        }
+        .padding(.horizontal, Theme.Spacing.lg)
+        .padding(.vertical, 8)
+        .overlay(alignment: .bottom) {
+            Rectangle().fill(themed.borderSubtle).frame(height: 1)
         }
     }
 

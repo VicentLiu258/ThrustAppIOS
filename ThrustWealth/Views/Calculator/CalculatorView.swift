@@ -2,6 +2,7 @@ import SwiftUI
 
 struct CalculatorView: View {
     @EnvironmentObject private var appState: AppState
+    @EnvironmentObject private var chatService: ChatService
     @StateObject private var vm = CalculatorViewModel()
     @Environment(\.themed) private var themed
     @Environment(\.colorScheme) private var colorScheme
@@ -120,6 +121,20 @@ struct CalculatorView: View {
                     selected: $vm.symbolID,
                     onSelect: vm.selectSymbol
                 )
+            }
+
+            if appState.preferences.showHomeChatButton {
+                HStack {
+                    Spacer()
+                    FloatingChatButton(
+                        unreadCount: chatService.unreadCount,
+                        action: openSupportChat
+                    )
+                    .padding(.trailing, 18)
+                }
+                .padding(.bottom, 64)
+                .zIndex(5)
+                .transition(.scale.combined(with: .opacity))
             }
 
             if let toast = vm.toastMessage {
@@ -356,5 +371,14 @@ struct CalculatorView: View {
         case "journal": break
         default: break
         }
+    }
+
+    private func openSupportChat() {
+        chatService.requestOpenChat(
+            privacyConsentAccepted: appState.preferences.privacyConsentAccepted,
+            onToast: { message in
+                vm.showToast(message)
+            }
+        )
     }
 }

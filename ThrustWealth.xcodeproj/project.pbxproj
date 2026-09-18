@@ -52,6 +52,7 @@
 		A1B2C3D4E5F6000100000005 /* PrivacyConsentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6000100000006 /* PrivacyConsentView.swift */; };
 		A1B2C3D4E5F6000100000007 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6000100000008 /* PrivacyInfo.xcprivacy */; };
 		A1B2C3D4E5F6000100000009 /* SalesmartlyChat in Frameworks */ = {isa = PBXBuildFile; productRef = A1B2C3D4E5F600010000000A /* SalesmartlyChat */; };
+		A1B2C3D4E5F600010000000C /* FloatingChatButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F600010000000D /* FloatingChatButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -101,6 +102,7 @@
 		A1B2C3D4E5F6000100000004 /* ChatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatService.swift; sourceTree = "<group>"; };
 		A1B2C3D4E5F6000100000006 /* PrivacyConsentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyConsentView.swift; sourceTree = "<group>"; };
 		A1B2C3D4E5F6000100000008 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		A1B2C3D4E5F600010000000D /* FloatingChatButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingChatButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -243,6 +245,7 @@
 				1EAB90CA69EE427889AB7758 /* FormInputField.swift */,
 				A1FC32F4A5E8437B9FCCB05D /* PresetPillsRow.swift */,
 				A1B2C3D4E5F6000100000006 /* PrivacyConsentView.swift */,
+				A1B2C3D4E5F600010000000D /* FloatingChatButton.swift */,
 				DC3CE12C8394410BB955DD1C /* SearchBar.swift */,
 				312EE80D3C2447B38C8BE80B /* SegmentedControl.swift */,
 			);
@@ -390,6 +393,7 @@
 				A1B2C3D4E5F6000100000001 /* ChatConfig.swift in Sources */,
 				A1B2C3D4E5F6000100000003 /* ChatService.swift in Sources */,
 				A1B2C3D4E5F6000100000005 /* PrivacyConsentView.swift in Sources */,
+				A1B2C3D4E5F600010000000C /* FloatingChatButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

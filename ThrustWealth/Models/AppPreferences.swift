@@ -8,6 +8,8 @@ struct AppPreferences: Codable, Equatable {
     var theme: AppThemeOption
     /// Required before SaleSmartly SDK initialization (compliance).
     var privacyConsentAccepted: Bool
+    /// Whether the floating support chat button is shown on the home page.
+    var showHomeChatButton: Bool
 
     static let `default` = AppPreferences(
         accountCurrency: "USD",
@@ -15,7 +17,8 @@ struct AppPreferences: Codable, Equatable {
         defaultLeverage: "1:100",
         lotUnitDisplay: "Standard",
         theme: .dark,
-        privacyConsentAccepted: false
+        privacyConsentAccepted: false,
+        showHomeChatButton: true
     )
 
     static let currencies = ["USD", "EUR", "GBP", "JPY"]
@@ -33,7 +36,7 @@ struct AppPreferences: Codable, Equatable {
 
     /// Backward-compatible decoding for preferences saved before privacyConsentAccepted existed.
     enum CodingKeys: String, CodingKey {
-        case accountCurrency, defaultSymbol, defaultLeverage, lotUnitDisplay, theme, privacyConsentAccepted
+        case accountCurrency, defaultSymbol, defaultLeverage, lotUnitDisplay, theme, privacyConsentAccepted, showHomeChatButton
     }
 
     init(
@@ -42,7 +45,8 @@ struct AppPreferences: Codable, Equatable {
         defaultLeverage: String,
         lotUnitDisplay: String,
         theme: AppThemeOption,
-        privacyConsentAccepted: Bool
+        privacyConsentAccepted: Bool,
+        showHomeChatButton: Bool = true
     ) {
         self.accountCurrency = accountCurrency
         self.defaultSymbol = defaultSymbol
@@ -50,6 +54,7 @@ struct AppPreferences: Codable, Equatable {
         self.lotUnitDisplay = lotUnitDisplay
         self.theme = theme
         self.privacyConsentAccepted = privacyConsentAccepted
+        self.showHomeChatButton = showHomeChatButton
     }
 
     init(from decoder: Decoder) throws {
@@ -60,6 +65,7 @@ struct AppPreferences: Codable, Equatable {
         lotUnitDisplay = try container.decodeIfPresent(String.self, forKey: .lotUnitDisplay) ?? "Standard"
         theme = try container.decodeIfPresent(AppThemeOption.self, forKey: .theme) ?? .dark
         privacyConsentAccepted = try container.decodeIfPresent(Bool.self, forKey: .privacyConsentAccepted) ?? false
+        showHomeChatButton = try container.decodeIfPresent(Bool.self, forKey: .showHomeChatButton) ?? true
     }
 }
 

@@ -94,6 +94,37 @@ final class ChatService: ObservableObject {
         #endif
     }
 
+    /// High-level entry point to request opening the customer support chat interface.
+    /// Handles privacy consent checks, config verification, and lazy initialization.
+    func requestOpenChat(
+        privacyConsentAccepted: Bool,
+        onToast: @escaping (String) -> Void
+    ) {
+        guard privacyConsentAccepted else {
+            onToast("Please accept the Privacy Policy first.")
+            return
+        }
+        guard ChatConfig.isConfigured else {
+            onToast("Support chat is not configured yet. (Please configure scriptURL in ChatConfig.swift)")
+            return
+        }
+        if isReady {
+            openChat()
+        } else if isInitializing {
+            onToast("Connecting to support…")
+        } else {
+            onToast("Connecting to support…")
+            Task {
+                await initializeIfAllowed(privacyConsentAccepted: true)
+                if self.isReady {
+                    self.openChat()
+                } else {
+                    onToast(self.lastError ?? "Unable to open support chat.")
+                }
+            }
+        }
+    }
+
     func setWindowVisible(_ visible: Bool) {
         #if canImport(SalesmartlyChat)
         guard isReady else { return }
