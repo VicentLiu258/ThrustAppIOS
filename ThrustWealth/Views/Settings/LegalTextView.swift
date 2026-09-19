@@ -26,7 +26,7 @@ struct LegalTextView: View {
                         section(
                             "Optional Support Chat (SaleSmartly)",
                             """
-                            If you use in-app Contact Support, the chat feature is provided by SaleSmartly iOS SDK (Guangzhou Biaopin Software Co., Ltd.).
+                            If you use in-app Contact Support, the chat feature is provided by SaleSmartly's service-link web page (Guangzhou Biaopin Software Co., Ltd.).
 
                             Purpose: online customer support inside the App.
 

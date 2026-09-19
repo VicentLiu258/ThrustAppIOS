@@ -4,8 +4,6 @@ import SwiftUI
 struct ThrustWealthApp: App {
     @StateObject private var appState = AppState()
     @StateObject private var chatService = ChatService.shared
-    @Environment(\.scenePhase) private var scenePhase
-
     @State private var showPrivacySheet = false
 
     init() {
@@ -35,21 +33,6 @@ struct ThrustWealthApp: App {
             }
             .sheet(isPresented: $showPrivacySheet) {
                 LegalTextView(kind: .privacy)
-            }
-            .task(id: appState.preferences.privacyConsentAccepted) {
-                await chatService.initializeIfAllowed(
-                    privacyConsentAccepted: appState.preferences.privacyConsentAccepted
-                )
-            }
-            .onChange(of: scenePhase) { _, phase in
-                switch phase {
-                case .active:
-                    chatService.setWindowVisible(true)
-                case .background, .inactive:
-                    chatService.setWindowVisible(false)
-                @unknown default:
-                    break
-                }
             }
         }
     }

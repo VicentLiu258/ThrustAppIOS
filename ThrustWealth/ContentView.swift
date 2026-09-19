@@ -1,7 +1,4 @@
 import SwiftUI
-#if canImport(SalesmartlyChat)
-import SalesmartlyChat
-#endif
 
 struct ContentView: View {
     @EnvironmentObject private var appState: AppState
@@ -46,12 +43,10 @@ struct ContentView: View {
             .tint(Theme.Colors.brandPrimary)
             .thrustTheme()
 
-            #if canImport(SalesmartlyChat)
-            if chatService.isReady {
-                SalesmartlyChatHost(runtime: SalesmartlyChat.runtime())
-                    .allowsHitTesting(true)
-            }
-            #endif
+        }
+        .sheet(isPresented: $chatService.isChatPresented) {
+            SalesmartlyChatSheet()
+                .environmentObject(chatService)
         }
     }
 }

@@ -1,15 +1,4 @@
 {
-  "originHash" : "9a04680b633565ef8f963fa891339c6d56230ca2c08a8f99546ddbf295a0902c",
-  "pins" : [
-    {
-      "identity" : "mobile-sdk",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/SaleSmartly-Mobile/Mobile-SDK",
-      "state" : {
-        "revision" : "4d7ed5e66cf0d67dcc42cea03deada39019de73d",
-        "version" : "1.0.0"
-      }
-    }
-  ],
+  "pins" : [],
   "version" : 3
 }

@@ -51,7 +51,6 @@
 		A1B2C3D4E5F6000100000003 /* ChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6000100000004 /* ChatService.swift */; };
 		A1B2C3D4E5F6000100000005 /* PrivacyConsentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6000100000006 /* PrivacyConsentView.swift */; };
 		A1B2C3D4E5F6000100000007 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6000100000008 /* PrivacyInfo.xcprivacy */; };
-		A1B2C3D4E5F6000100000009 /* SalesmartlyChat in Frameworks */ = {isa = PBXBuildFile; productRef = A1B2C3D4E5F600010000000A /* SalesmartlyChat */; };
 		A1B2C3D4E5F600010000000C /* FloatingChatButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F600010000000D /* FloatingChatButton.swift */; };
 /* End PBXBuildFile section */
 
@@ -110,7 +109,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A1B2C3D4E5F6000100000009 /* SalesmartlyChat in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -291,7 +289,6 @@
 			);
 			name = ThrustWealth;
 			packageProductDependencies = (
-				A1B2C3D4E5F600010000000A /* SalesmartlyChat */,
 			);
 			productName = ThrustWealth;
 			productReference = 3036302F2FFD406CA34300FB /* ThrustWealth.app */;
@@ -322,7 +319,6 @@
 			);
 			mainGroup = 0C51F8057D064115B3303EC9;
 			packageReferences = (
-				A1B2C3D4E5F600010000000B /* XCRemoteSwiftPackageReference "Mobile-SDK" */,
 			);
 			productRefGroup = ABF14D6C31914ACB9C7DA403 /* Products */;
 			projectDirPath = "";
@@ -518,24 +514,6 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		A1B2C3D4E5F600010000000B /* XCRemoteSwiftPackageReference "Mobile-SDK" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SaleSmartly-Mobile/Mobile-SDK";
-			requirement = {
-				kind = exactVersion;
-				version = 1.0.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		A1B2C3D4E5F600010000000A /* SalesmartlyChat */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A1B2C3D4E5F600010000000B /* XCRemoteSwiftPackageReference "Mobile-SDK" */;
-			productName = SalesmartlyChat;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = BA432290BD41444DA2C2D55E /* Project object */;
 }
