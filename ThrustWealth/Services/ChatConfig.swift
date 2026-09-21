@@ -2,12 +2,12 @@ import Foundation
 
 /// SaleSmartly iOS integration configuration.
 ///
-/// iOS follows the dedicated service-link/WebView flow. Do not use the Android
-/// project JavaScript URL here: it is only required by the Android native SDK.
+/// iOS follows the hosted H5/WebView flow. Do not use the Android project
+/// JavaScript URL as the WebView address; the H5 bridge loads it after login.
 enum ChatConfig {
-    /// Copy this from SaleSmartly → Chat Plugin → Service Link.
-    /// Example: `https://chat.example.com/service/example-id`
-    static let serviceLinkURL = "REPLACE_WITH_SALESMARTLY_SERVICE_LINK"
+    /// Hosted H5 bridge used by the iOS WebView. The page loads the
+    /// SaleSmartly project script after receiving the native login payload.
+    static let serviceLinkURL = "https://www.compoundmatrix.com/salesmartly-chat/"
 
     /// These tags must exist in SaleSmartly → Customers → Tag Management.
     static let labelNames = ["ios", "thrust_wealth"]

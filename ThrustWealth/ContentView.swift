@@ -3,6 +3,7 @@ import SwiftUI
 struct ContentView: View {
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var chatService: ChatService
+    @Environment(\.scenePhase) private var scenePhase
     @State private var selectedTab: AppTab = .calculator
 
     var body: some View {
@@ -43,10 +44,22 @@ struct ContentView: View {
             .tint(Theme.Colors.brandPrimary)
             .thrustTheme()
 
+            // Keep one WebView alive after privacy consent. SaleSmartly's
+            // real-time connection must survive closing the visible chat UI,
+            // otherwise agent replies sent afterward cannot reach the app.
+            if appState.preferences.privacyConsentAccepted {
+                SalesmartlyChatSheet()
+                    .environmentObject(chatService)
+                    .opacity(chatService.isChatPresented ? 1 : 0)
+                    .allowsHitTesting(chatService.isChatPresented)
+                    .accessibilityHidden(!chatService.isChatPresented)
+                    .zIndex(100)
+            }
         }
-        .sheet(isPresented: $chatService.isChatPresented) {
-            SalesmartlyChatSheet()
-                .environmentObject(chatService)
+        .onChange(of: scenePhase) { _, phase in
+            guard phase == .active,
+                  case .failed = chatService.connectionState else { return }
+            chatService.retryChat()
         }
     }
 }

@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#08111f">
+  <title>Thrust Wealth Support</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+      background: #08111f;
+      color: #f8fafc;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { margin: 0; min-height: 100%; background: #08111f; }
+
+    body {
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: grid;
+      place-items: center;
+      padding: env(safe-area-inset-top) 20px env(safe-area-inset-bottom);
+      background:
+        radial-gradient(circle at 85% 12%, rgba(46, 124, 246, .24), transparent 34%),
+        linear-gradient(160deg, #0b1830 0%, #08111f 58%, #060b14 100%);
+    }
+
+    .shell {
+      width: min(100%, 520px);
+      min-height: min(680px, calc(100dvh - 40px));
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 28px 24px 24px;
+      border: 1px solid rgba(148, 163, 184, .22);
+      border-radius: 28px;
+      background: rgba(15, 29, 51, .74);
+      box-shadow: 0 28px 80px rgba(0, 0, 0, .32), inset 0 1px rgba(255, 255, 255, .06);
+      backdrop-filter: blur(18px);
+    }
+
+    .brand { display: flex; align-items: center; gap: 12px; }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      color: #fff;
+      font-weight: 800;
+      font-size: 20px;
+      background: linear-gradient(145deg, #4b82f6, #2563eb);
+      box-shadow: 0 8px 24px rgba(37, 99, 235, .35);
+    }
+
+    .brand-name { font-size: 17px; font-weight: 750; letter-spacing: .01em; }
+    .brand-caption { margin-top: 3px; color: #94a3b8; font-size: 13px; }
+
+    main { padding: 52px 0 32px; }
+    h1 { margin: 0; font-size: clamp(30px, 8vw, 42px); line-height: 1.08; letter-spacing: -.035em; }
+    .intro { max-width: 34rem; margin: 18px 0 0; color: #cbd5e1; font-size: 16px; line-height: 1.65; }
+
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 28px;
+      color: #93c5fd;
+      font-size: 14px;
+    }
+
+    .status-dot {
+      width: 9px;
+      height: 9px;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      background: #fbbf24;
+      box-shadow: 0 0 0 5px rgba(251, 191, 36, .12);
+    }
+
+    .status.ready .status-dot { background: #34d399; box-shadow: 0 0 0 5px rgba(52, 211, 153, .12); }
+    .status.error { color: #fca5a5; }
+    .status.error .status-dot { background: #f87171; box-shadow: 0 0 0 5px rgba(248, 113, 113, .12); }
+
+    .open-button, .retry-button {
+      width: 100%;
+      min-height: 54px;
+      border: 0;
+      border-radius: 16px;
+      color: #fff;
+      font: inherit;
+      font-weight: 750;
+      cursor: pointer;
+      background: linear-gradient(135deg, #4b82f6, #2563eb);
+      box-shadow: 0 14px 30px rgba(37, 99, 235, .3);
+    }
+
+    .open-button:disabled { cursor: wait; opacity: .55; box-shadow: none; }
+    .retry-button { display: none; background: rgba(148, 163, 184, .18); box-shadow: none; }
+    .retry-button.visible { display: block; }
+
+    .hint { margin: 16px 0 0; color: #64748b; font-size: 12px; line-height: 1.55; text-align: center; }
+
+    @media (max-width: 420px) {
+      body { padding-left: 12px; padding-right: 12px; }
+      .shell { min-height: calc(100dvh - 24px); padding: 22px 18px 18px; border-radius: 22px; }
+      main { padding-top: 40px; }
+    }
+  </style>
+</head>
+<body>
+  <section class="shell" aria-label="Thrust Wealth customer support">
+    <header class="brand">
+      <div class="brand-mark" aria-hidden="true">T</div>
+      <div>
+        <div class="brand-name">Thrust Wealth</div>
+        <div class="brand-caption">Customer Support</div>
+      </div>
+    </header>
+
+    <main>
+      <h1>How can we help?</h1>
+      <p class="intro">Connect with our support team about your account, calculations, or anything else in the app.</p>
+      <div id="status" class="status" role="status" aria-live="polite">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span id="statusText">Connecting to support…</span>
+      </div>
+    </main>
+
+    <footer>
+      <button id="openChat" class="open-button" type="button" disabled>Open chat</button>
+      <button id="retry" class="retry-button" type="button">Try again</button>
+      <p class="hint">Your app identity is sent securely by the native app and is not placed in the URL.</p>
+    </footer>
+  </section>
+
+  <script>
+    (function () {
+      'use strict';
+
+      const scriptURL = 'https://plugin-code.salesmartly.com/js/project_830957_862319_1789665876.js';
+      const query = new URLSearchParams(window.location.search);
+      const requiresAppLogin = query.get('loginSource') === 'postMessage';
+      const status = document.getElementById('status');
+      const statusText = document.getElementById('statusText');
+      const openButton = document.getElementById('openChat');
+      const retryButton = document.getElementById('retry');
+      let sdkStarted = false;
+      let sdkReady = false;
+      let loginReady = false;
+      let ready = false;
+      let openRequested = false;
+      let loginTimer;
+      let loginResultTimer;
+      let queueTimer;
+      let queueAttached = false;
+
+      // Hide the vendor launcher; this page owns the visible entry point.
+      window.__ssc = window.__ssc || {};
+      window.__ssc.setting = Object.assign({}, window.__ssc.setting, { hideIcon: true });
+
+      function setStatus(text, state) {
+        statusText.textContent = text;
+        status.classList.toggle('ready', state === 'ready');
+        status.classList.toggle('error', state === 'error');
+      }
+
+      function reportToNative(payload) {
+        const bridge = window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.salesmartlyBridge;
+        if (bridge) bridge.postMessage(payload);
+      }
+
+      function reportStage(stage) {
+        reportToNative({ type: 'diagnostic', stage: stage });
+      }
+
+      function validPayload(payload) {
+        return payload && typeof payload === 'object' && !Array.isArray(payload)
+          && typeof payload.user_id === 'string' && payload.user_id.trim()
+          && typeof payload.user_name === 'string' && payload.user_name.trim();
+      }
+
+      function openChat() {
+        openRequested = true;
+        if (!ready || !window.ssq || typeof window.ssq.push !== 'function') return;
+        window.ssq.push('chatOpen', function (result) {
+          reportStage(result && result.status === 'success' ? 'chat-open-success' : 'chat-open-failed');
+          if (result && result.status === 'failed') {
+            setStatus('Unable to open support chat. Please try again.', 'error');
+            retryButton.classList.add('visible');
+          }
+        });
+      }
+
+      function closeChat() {
+        openRequested = false;
+        if (!ready || !window.ssq || typeof window.ssq.push !== 'function') return;
+        window.ssq.push('chatClose');
+        reportStage('chat-close');
+      }
+
+      function markReadyWhenAuthenticated() {
+        if (!sdkReady || !loginReady || ready) return;
+        ready = true;
+        openButton.disabled = false;
+        setStatus('Support is online', 'ready');
+        if (openRequested) openChat();
+      }
+
+      function reportUnread(value) {
+        const count = value && Number(value.num);
+        reportToNative({ type: 'unread', count: Number.isFinite(count) ? count : 0 });
+      }
+
+      function reportReceived() {
+        reportToNative({ type: 'received' });
+      }
+
+      function hideVendorIcon() {
+        window.__ssc = window.__ssc || {};
+        window.__ssc.setting = Object.assign({}, window.__ssc.setting, { hideIcon: true });
+      }
+
+      function startSDK(loginInfo) {
+        if (sdkStarted) return;
+        sdkStarted = true;
+        const script = document.createElement('script');
+        script.id = 'salesmartly-sdk';
+        script.async = true;
+        script.src = scriptURL;
+        script.addEventListener('load', hideVendorIcon, { once: true });
+        function attachQueue() {
+          // The project script creates the official ssq function and its queue.
+          // Never pre-create window.ssq here: the loader treats an existing value
+          // as an already-installed SDK and would skip initialization.
+          if (!window.ssq || typeof window.ssq.push !== 'function') {
+            queueTimer = window.setTimeout(attachQueue, 20);
+            return;
+          }
+          if (queueAttached) return;
+          queueAttached = true;
+          window.clearTimeout(queueTimer);
+          window.ssq.push('onReady', function () {
+            hideVendorIcon();
+            sdkReady = true;
+            reportStage('sdk-ready');
+            if (!loginReady) setStatus('Signing in to support…');
+            markReadyWhenAuthenticated();
+          });
+          window.ssq.push('onUnRead', reportUnread);
+          window.ssq.push('onReceiveMessage', reportReceived);
+          window.ssq.push('setLoginInfo', loginInfo, function (result) {
+            const loginStatus = result && result.status;
+            if (loginStatus === 'success') {
+              window.clearTimeout(loginResultTimer);
+              loginReady = true;
+              reportStage('login-success');
+              markReadyWhenAuthenticated();
+              return;
+            }
+            if (loginStatus === 'failed') {
+              window.clearTimeout(loginResultTimer);
+              reportStage('login-failed');
+              setStatus('Unable to sign in to support. Please try again.', 'error');
+              retryButton.classList.add('visible');
+            }
+          });
+          loginResultTimer = window.setTimeout(function () {
+            if (loginReady) return;
+            setStatus('Support sign-in timed out. Please try again.', 'error');
+            retryButton.classList.add('visible');
+          }, 20000);
+        }
+        script.addEventListener('load', attachQueue, { once: true });
+        script.onerror = function () {
+          window.clearTimeout(queueTimer);
+          reportStage('sdk-load-failed');
+          setStatus('Support is temporarily unavailable', 'error');
+          openButton.disabled = true;
+          retryButton.classList.add('visible');
+        };
+        document.head.appendChild(script);
+        attachQueue();
+      }
+
+      function receiveNativeMessage(event) {
+        if (event.origin !== window.location.origin) return;
+        if (event.source && event.source !== window) return;
+        let message;
+        try { message = typeof event.data === 'string' ? JSON.parse(event.data) : event.data; } catch (_) { return; }
+        if (!message || message.version !== 1) return;
+        if (message.type === 'service-link-login' && validPayload(message.payload)) {
+          clearTimeout(loginTimer);
+          startSDK(message.payload);
+          return;
+        }
+        if (message.type === 'service-link-open') {
+          openChat();
+          return;
+        }
+        if (message.type === 'service-link-close') closeChat();
+      }
+
+      openButton.addEventListener('click', openChat);
+      retryButton.addEventListener('click', function () { window.location.reload(); });
+
+      if (requiresAppLogin) {
+        window.addEventListener('message', receiveNativeMessage);
+        loginTimer = window.setTimeout(function () {
+          if (sdkStarted) return;
+          setStatus('The app identity was not received. Please close and reopen chat.', 'error');
+          retryButton.classList.add('visible');
+        }, 15000);
+      } else {
+        // Direct browser visits can still be used for a basic smoke test.
+        startSDK({
+          user_id: 'web_guest_' + Math.random().toString(36).slice(2, 14),
+          user_name: 'Web Guest',
+          language: navigator.language || 'en-US',
+          label_names: ['thrust_wealth'],
+          update_label_type: 'update'
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
