@@ -42,6 +42,19 @@ struct PLCalculatorView: View {
                         text: $vm.lotsText
                     )
 
+                    HStack(alignment: .top, spacing: Theme.Spacing.md) {
+                        FormInputField(
+                            label: "Take Profit Target",
+                            hint: "Optional",
+                            text: $vm.takeProfitPriceText
+                        )
+                        FormInputField(
+                            label: "Stop Loss Target",
+                            hint: "Optional",
+                            text: $vm.stopLossPriceText
+                        )
+                    }
+
                     let r = vm.result
                     let color: Color? = r.isValid ? (r.isProfit ? Theme.Colors.profit : Theme.Colors.loss) : nil
                     let distanceText: String = {
@@ -55,6 +68,11 @@ struct PLCalculatorView: View {
                         let sign = r.returnPercent >= 0 ? "+" : ""
                         return "\(sign)\(String(format: "%.2f", r.returnPercent))%"
                     }()
+                    let targetText: (Double?, Double?) -> String = { amount, pips in
+                        guard let amount, let pips else { return "—" }
+                        let pipSign = pips >= 0 ? "+" : "−"
+                        return "\(Formatters.money(amount, currency: vm.currency, signed: true)) · \(pipSign)\(String(format: "%.1f", abs(pips))) pips"
+                    }
 
                     ResultShowcaseCard(
                         heroTitle: "Profit / Loss",
@@ -63,7 +81,9 @@ struct PLCalculatorView: View {
                         badge: "Calculated P/L",
                         stats: [
                             ("Price Distance", distanceText, color),
-                            ("Return on Notional", returnText, color)
+                            ("Return on Notional", returnText, color),
+                            ("TP Target P/L", targetText(r.takeProfitAmount, r.takeProfitPips), r.takeProfitAmount.map { $0 >= 0 ? Theme.Colors.profit : Theme.Colors.loss }),
+                            ("SL Target P/L", targetText(r.stopLossAmount, r.stopLossPips), r.stopLossAmount.map { $0 >= 0 ? Theme.Colors.profit : Theme.Colors.loss })
                         ],
                         isValid: r.isValid,
                         onReset: { vm.reset() },

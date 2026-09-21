@@ -30,10 +30,17 @@ struct ProfitLossResult: Equatable {
     var returnPercent: Double
     var notionalValue: Double
     var isProfit: Bool
+    var takeProfitAmount: Double?
+    var takeProfitPips: Double?
+    var stopLossAmount: Double?
+    var stopLossPips: Double?
+    var error: String?
 
     static let invalid = ProfitLossResult(
         isValid: false, profitAmount: 0, profitPips: 0, priceDelta: 0,
-        returnPercent: 0, notionalValue: 0, isProfit: false
+        returnPercent: 0, notionalValue: 0, isProfit: false,
+        takeProfitAmount: nil, takeProfitPips: nil,
+        stopLossAmount: nil, stopLossPips: nil, error: nil
     )
 }
 
@@ -85,7 +92,7 @@ enum CalculatorEngine {
 
         let numEntry = entryPrice > 0 ? entryPrice : instrument.defaultPrice
 
-        guard balance > 0, riskPercent > 0, stopPips > 0 else {
+        guard balance > 0, (0.01...100).contains(riskPercent), stopPips > 0 else {
             return LotSizeResult(
                 isValid: false,
                 suggestedLots: 0,
@@ -97,7 +104,7 @@ enum CalculatorEngine {
                 pipValue: 0,
                 notionalValue: 0,
                 stopLossPrice: nil,
-                error: "Enter positive balance, risk %, and stop loss pips"
+                error: "Balance must be positive; risk must be 0.01–100%; stop loss must be positive"
             )
         }
 
@@ -112,6 +119,13 @@ enum CalculatorEngine {
         }
 
         let rawLots = riskAmount / (stopPips * pipValue)
+        guard rawLots <= 100 else {
+            return LotSizeResult(
+                isValid: false, suggestedLots: 0, rawLots: rawLots, miniLots: 0, microLots: 0,
+                riskAmount: riskAmount, riskPercent: riskPercent, pipValue: pipValue, notionalValue: 0,
+                stopLossPrice: nil, error: "Calculated lot size exceeds the 100-lot maximum"
+            )
+        }
         let suggestedLots = max(0.01, floor(rawLots * 100) / 100)
         let notional = suggestedLots * instrument.contractSize * numEntry
 
@@ -151,11 +165,11 @@ enum CalculatorEngine {
 
         let numEntry = entryPrice > 0 ? entryPrice : instrument.defaultPrice
 
-        guard balance > 0, lotSize > 0, stopPips > 0 else {
+        guard balance > 0, (0.01...100).contains(lotSize), stopPips > 0 else {
             return LotSizeResult(
                 isValid: false, suggestedLots: lotSize, rawLots: lotSize, miniLots: 0, microLots: 0,
                 riskAmount: 0, riskPercent: 0, pipValue: 0, notionalValue: 0,
-                stopLossPrice: nil, error: "Enter valid balance, lot size, and stop loss"
+                stopLossPrice: nil, error: "Balance must be positive; lots must be 0.01–100; stop loss must be positive"
             )
         }
 
@@ -163,6 +177,13 @@ enum CalculatorEngine {
         let riskAmount = stopPips * pipValue * lotSize
         let riskPercent = (riskAmount / balance) * 100
         let notional = lotSize * instrument.contractSize * numEntry
+        guard riskPercent <= 100 else {
+            return LotSizeResult(
+                isValid: false, suggestedLots: lotSize, rawLots: lotSize, miniLots: 0, microLots: 0,
+                riskAmount: riskAmount, riskPercent: riskPercent, pipValue: pipValue, notionalValue: notional,
+                stopLossPrice: nil, error: "Calculated risk exceeds the 100% maximum"
+            )
+        }
 
         var slPrice: Double?
         if numEntry > 0 {
@@ -193,9 +214,11 @@ enum CalculatorEngine {
         openPrice: Double,
         closePrice: Double,
         lotSize: Double,
+        takeProfitPrice: Double? = nil,
+        stopLossPrice: Double? = nil,
         accountCurrency: String = "USD"
     ) -> ProfitLossResult {
-        guard let instrument, openPrice > 0, closePrice > 0, lotSize > 0 else {
+        guard let instrument, openPrice > 0, closePrice > 0, (0.01...100).contains(lotSize) else {
             return .invalid
         }
 
@@ -205,6 +228,14 @@ enum CalculatorEngine {
         let profitAmount = profitPips * pipValue * lotSize
         let notional = lotSize * instrument.contractSize * openPrice
         let returnPercent = notional > 0 ? (profitAmount / notional) * 100 : 0
+        let takeProfit = calculateTarget(
+            price: takeProfitPrice, openPrice: openPrice, lotSize: lotSize,
+            instrument: instrument, direction: direction, pipValue: pipValue
+        )
+        let stopLoss = calculateTarget(
+            price: stopLossPrice, openPrice: openPrice, lotSize: lotSize,
+            instrument: instrument, direction: direction, pipValue: pipValue
+        )
 
         return ProfitLossResult(
             isValid: true,
@@ -213,7 +244,25 @@ enum CalculatorEngine {
             priceDelta: round(priceDelta, digits: instrument.digits),
             returnPercent: round(returnPercent, digits: 2),
             notionalValue: notional,
-            isProfit: profitAmount >= 0
+            isProfit: profitAmount >= 0,
+            takeProfitAmount: takeProfit?.amount,
+            takeProfitPips: takeProfit?.pips,
+            stopLossAmount: stopLoss?.amount,
+            stopLossPips: stopLoss?.pips,
+            error: nil
+        )
+    }
+
+    private static func calculateTarget(
+        price: Double?, openPrice: Double, lotSize: Double, instrument: Instrument,
+        direction: TradeDirection, pipValue: Double
+    ) -> (amount: Double, pips: Double)? {
+        guard let price, price > 0 else { return nil }
+        let delta = direction == .long ? price - openPrice : openPrice - price
+        let pips = delta / instrument.pipSize
+        return (
+            round(pips * pipValue * lotSize, digits: 2),
+            round(pips, digits: 1)
         )
     }
 

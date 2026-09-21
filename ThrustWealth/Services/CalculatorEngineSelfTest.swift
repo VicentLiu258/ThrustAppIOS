@@ -31,6 +31,19 @@ enum CalculatorEngineSelfTest {
         assert(pl.isValid)
         assert(abs(pl.profitAmount - 200) < 0.01, "Expected +200, got \(pl.profitAmount)")
         assert(abs(pl.profitPips - 100) < 0.1)
+
+        let targets = CalculatorEngine.calculateProfitLoss(
+            instrument: gold,
+            direction: .long,
+            openPrice: 2350,
+            closePrice: 2360,
+            lotSize: 0.20,
+            takeProfitPrice: 2370,
+            stopLossPrice: 2345,
+            accountCurrency: "USD"
+        )
+        assert(abs((targets.takeProfitAmount ?? 0) - 400) < 0.01)
+        assert(abs((targets.stopLossAmount ?? 0) + 100) < 0.01)
         print("[ThrustWealth] CalculatorEngine self-test passed")
     }
 }

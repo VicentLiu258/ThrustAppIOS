@@ -9,6 +9,8 @@ final class PLCalculatorViewModel: ObservableObject {
     @Published var openPriceText: String = "2350.00"
     @Published var closePriceText: String = "2360.00"
     @Published var lotsText: String = "0.20"
+    @Published var takeProfitPriceText: String = ""
+    @Published var stopLossPriceText: String = ""
     @Published var result: ProfitLossResult = .invalid
     @Published var toastMessage: String?
 
@@ -31,7 +33,9 @@ final class PLCalculatorViewModel: ObservableObject {
             $direction.map { _ in () }.eraseToAnyPublisher(),
             $openPriceText.map { _ in () }.eraseToAnyPublisher(),
             $closePriceText.map { _ in () }.eraseToAnyPublisher(),
-            $lotsText.map { _ in () }.eraseToAnyPublisher()
+            $lotsText.map { _ in () }.eraseToAnyPublisher(),
+            $takeProfitPriceText.map { _ in () }.eraseToAnyPublisher(),
+            $stopLossPriceText.map { _ in () }.eraseToAnyPublisher()
         )
         .debounce(for: .milliseconds(280), scheduler: RunLoop.main)
         .sink { [weak self] in self?.recalc() }
@@ -45,6 +49,8 @@ final class PLCalculatorViewModel: ObservableObject {
             openPriceText = Formatters.price(inst.defaultPrice, digits: inst.digits)
             closePriceText = Formatters.price(inst.defaultPrice * 1.004, digits: inst.digits)
         }
+        takeProfitPriceText = ""
+        stopLossPriceText = ""
     }
 
     func recalc() {
@@ -54,6 +60,8 @@ final class PLCalculatorViewModel: ObservableObject {
             openPrice: Double(openPriceText) ?? 0,
             closePrice: Double(closePriceText) ?? 0,
             lotSize: Double(lotsText) ?? 0,
+            takeProfitPrice: Double(takeProfitPriceText),
+            stopLossPrice: Double(stopLossPriceText),
             accountCurrency: currency
         )
     }
@@ -61,6 +69,8 @@ final class PLCalculatorViewModel: ObservableObject {
     func reset() {
         direction = .long
         lotsText = "0.20"
+        takeProfitPriceText = ""
+        stopLossPriceText = ""
         if let inst = currentInstrument {
             openPriceText = Formatters.price(inst.defaultPrice, digits: inst.digits)
             closePriceText = Formatters.price(inst.defaultPrice * 1.004, digits: inst.digits)
@@ -94,9 +104,13 @@ final class PLCalculatorViewModel: ObservableObject {
             ["Open", openPriceText],
             ["Close", closePriceText],
             ["Lots", lotsText],
+            ["Take Profit Target", takeProfitPriceText],
+            ["Stop Loss Target", stopLossPriceText],
             ["P/L", String(result.profitAmount)],
             ["Pips", String(result.profitPips)],
             ["Return %", String(result.returnPercent)],
+            ["TP Target P/L", targetSummary(amount: result.takeProfitAmount, pips: result.takeProfitPips)],
+            ["SL Target P/L", targetSummary(amount: result.stopLossAmount, pips: result.stopLossPips)],
             ["Disclaimer", "For calculation purposes only. Not investment advice."]
         ]
         if let url = ExportService.writeTempPublic(filename: "thrust_pnl_\(Int(Date().timeIntervalSince1970)).csv", content: ExportService.csvString(from: rows)) {
@@ -109,6 +123,13 @@ final class PLCalculatorViewModel: ObservableObject {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
             if self?.toastMessage == msg { self?.toastMessage = nil }
         }
+    }
+
+    private func targetSummary(amount: Double?, pips: Double?) -> String {
+        guard let amount, let pips else { return "—" }
+        let money = Formatters.money(amount, currency: currency, signed: true)
+        let pipSign = pips >= 0 ? "+" : "−"
+        return "\(money) · \(pipSign)\(String(format: "%.1f", abs(pips))) pips"
     }
 }
 

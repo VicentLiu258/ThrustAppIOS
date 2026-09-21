@@ -149,16 +149,12 @@ struct CalculatorView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .principal) {
-                if UIImage(named: "Logo") != nil {
-                    Image("Logo")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height: 28)
-                } else {
-                    Text("Thrust Wealth")
-                        .font(Theme.Fonts.sans(17, weight: .bold))
-                        .foregroundStyle(Theme.Colors.brandPrimary)
-                }
+                // The bundled Logo.png is a square app icon, not the horizontal
+                // wordmark used by the prototype. Keep the toolbar legible until
+                // a horizontal wordmark asset is supplied.
+                Text("Thrust Wealth")
+                    .font(Theme.Fonts.sans(17, weight: .bold))
+                    .foregroundStyle(Theme.Colors.brandPrimary)
             }
             ToolbarItemGroup(placement: .topBarTrailing) {
                 Button { navigateHistory = true } label: {
