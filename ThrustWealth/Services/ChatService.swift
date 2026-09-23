@@ -247,7 +247,7 @@ private struct SalesmartlyServiceWebView: UIViewRepresentable {
     }
 
     final class Coordinator: NSObject, WKNavigationDelegate, WKScriptMessageHandler {
-        private static let logger = Logger(subsystem: "com.thrustwealth.app", category: "SaleSmartly")
+        private static let logger = Logger(subsystem: "com.thrustwealth.tools", category: "SaleSmartly")
         private let serviceURL: URL
         private let serviceHost: String?
         private let loginInfo: [String: Any]
