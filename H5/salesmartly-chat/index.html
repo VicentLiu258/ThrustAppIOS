@@ -151,11 +151,10 @@
       const retryButton = document.getElementById('retry');
       let sdkStarted = false;
       let sdkReady = false;
-      let loginReady = false;
+      let loginReady = false;  // set true after setLoginInfo is queued (JSSDK has no callback)
       let ready = false;
       let openRequested = false;
       let loginTimer;
-      let loginResultTimer;
       let queueTimer;
       let queueAttached = false;
 
@@ -244,36 +243,30 @@
           if (queueAttached) return;
           queueAttached = true;
           window.clearTimeout(queueTimer);
+          // ── Important note ────────────────────────────────────────────────────────
+          // The SaleSmartly JSSDK's setLoginInfo() is a synchronous setter with NO
+          // callback – it only stores field values on the internal config object.
+          // Waiting for a callback (as the old code did) means loginReady is never
+          // set to true, so markReadyWhenAuthenticated() never fires, the chat
+          // window never opens, and no messages reach the backend.
+          // Fix: queue setLoginInfo first, mark loginReady = true immediately, then
+          // let onReady drive the final readiness check.
+          // ─────────────────────────────────────────────────────────────────────────
+
+          // 1. Register all event listeners first so none are missed.
           window.ssq.push('onReady', function () {
             hideVendorIcon();
             sdkReady = true;
             reportStage('sdk-ready');
-            if (!loginReady) setStatus('Signing in to support…');
             markReadyWhenAuthenticated();
           });
           window.ssq.push('onUnRead', reportUnread);
           window.ssq.push('onReceiveMessage', reportReceived);
-          window.ssq.push('setLoginInfo', loginInfo, function (result) {
-            const loginStatus = result && result.status;
-            if (loginStatus === 'success') {
-              window.clearTimeout(loginResultTimer);
-              loginReady = true;
-              reportStage('login-success');
-              markReadyWhenAuthenticated();
-              return;
-            }
-            if (loginStatus === 'failed') {
-              window.clearTimeout(loginResultTimer);
-              reportStage('login-failed');
-              setStatus('Unable to sign in to support. Please try again.', 'error');
-              retryButton.classList.add('visible');
-            }
-          });
-          loginResultTimer = window.setTimeout(function () {
-            if (loginReady) return;
-            setStatus('Support sign-in timed out. Please try again.', 'error');
-            retryButton.classList.add('visible');
-          }, 20000);
+
+          // 2. Set login info (fire-and-forget; JSSDK has no callback for this).
+          window.ssq.push('setLoginInfo', loginInfo);
+          loginReady = true;
+          reportStage('login-success');
         }
         script.addEventListener('load', attachQueue, { once: true });
         script.onerror = function () {
@@ -288,7 +281,9 @@
       }
 
       function receiveNativeMessage(event) {
-        if (event.origin !== window.location.origin) return;
+        // Allow same origin, OR empty-string origin which WKWebView's
+        // evaluateJavaScript() can produce when calling window.postMessage.
+        if (event.origin && event.origin !== window.location.origin) return;
         if (event.source && event.source !== window) return;
         let message;
         try { message = typeof event.data === 'string' ? JSON.parse(event.data) : event.data; } catch (_) { return; }
