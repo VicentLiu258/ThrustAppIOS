@@ -105,7 +105,14 @@ enum AppTab: Hashable, CaseIterable {
 
 private struct AppTabBar: View {
     @Binding var selection: AppTab
+    /// Indicator progress is separate so page switching can stay non-animated
+    /// while the lines still shrink and grow together.
+    @State private var lineSelection: AppTab = .calculator
     @Environment(\.themed) private var themed
+
+    private var lineAnimation: Animation {
+        .timingCurve(0.16, 1, 0.3, 1, duration: 0.28)
+    }
 
     var body: some View {
         HStack(spacing: 0) {
@@ -119,11 +126,15 @@ private struct AppTabBar: View {
                     withTransaction(transaction) {
                         selection = tab
                     }
+                    DispatchQueue.main.async {
+                        withAnimation(lineAnimation) {
+                            lineSelection = tab
+                        }
+                    }
                 } label: {
                     VStack(spacing: 3) {
-                        Capsule()
-                            .fill(selected ? Theme.Colors.brandPrimary : Color.clear)
-                            .frame(width: 20, height: 3)
+                        TabSelectionLine(progress: lineSelection == tab ? 1 : 0)
+                            .animation(lineAnimation, value: lineSelection)
                         Image(systemName: tab.symbol)
                             .font(.system(size: 22, weight: selected ? .semibold : .regular))
                             .keyframeAnimator(initialValue: TabIconMotion(), trigger: selection) { icon, motion in
@@ -161,6 +172,28 @@ private struct AppTabBar: View {
                 .fill(themed.borderSubtle)
                 .frame(height: 0.5)
         }
+    }
+}
+
+/// Centered marker. Progress 1 is the full line; 0 is gone.
+/// Width tracks progress the whole way, so the outgoing line shortens from both
+/// ends. Opacity only drops at the end, after it is already short.
+/// The incoming line uses the same progress curve in reverse.
+private struct TabSelectionLine: View, Animatable {
+    var progress: CGFloat
+
+    var animatableData: CGFloat {
+        get { progress }
+        set { progress = newValue }
+    }
+
+    var body: some View {
+        let amount = min(1, max(0, progress))
+        Capsule()
+            .fill(Theme.Colors.brandPrimary)
+            .frame(width: 20 * amount, height: 3)
+            .opacity(amount > 0.2 ? 1 : amount / 0.2)
+            .frame(width: 20, height: 3, alignment: .center)
     }
 }
 
