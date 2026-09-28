@@ -55,8 +55,11 @@ final class CalculatorViewModel: ObservableObject {
             ("Trade Journal", "Local trade log & stats", "journal"),
             ("Lot Size Calculator", "Risk → position sizing", "calc")
         ]
-        return tools.filter { $0.0.lowercased().contains(q) || $0.1.lowercased().contains(q) }
+        var hits = tools.filter { $0.0.lowercased().contains(q) || $0.1.lowercased().contains(q) }
             .map { (title: $0.0, desc: $0.1, route: $0.2) }
+
+        hits.append((title: "Search \"\(searchText.trimmingCharacters(in: .whitespacesAndNewlines))\"", desc: "Search and jump", route: "jump_search"))
+        return hits
     }
 
     func bind(appState: AppState) {

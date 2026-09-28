@@ -86,6 +86,7 @@ struct MarketSpecsView: View {
         .environment(\.themed, ThemedColors.resolve(for: colorScheme))
         .navigationTitle("Market Specs")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar(.visible, for: .navigationBar)
         .toolbar {
             ToolbarItemGroup(placement: .topBarTrailing) {
                 Button { vm.exportSpecs() } label: { Image(systemName: "square.and.arrow.up") }

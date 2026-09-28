@@ -13,14 +13,21 @@ struct CalculatorView: View {
     @State private var navigateHistory = false
     @State private var navigatePL = false
     @State private var navigateSpecs = false
+    @State private var isSearchingJump = false
+    @State private var jumpDebounceTask: Task<Void, Never>? = nil
 
     var body: some View {
-        ZStack(alignment: .bottom) {
+        ZStack(alignment: .bottomTrailing) {
             VStack(spacing: 0) {
-                ScrollView {
-                    VStack(alignment: .leading, spacing: Theme.Spacing.md) {
-                        searchSection
+                calculatorHeader
 
+                searchSection
+                    .padding(.horizontal, Theme.Spacing.lg)
+                    .padding(.vertical, 4)
+                    .background(themed.bgApp)
+
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 4) {
                         ThrustSegmentedControl(
                             options: CalculatorMode.allCases.map { ($0, $0.title) },
                             selection: $vm.mode
@@ -94,7 +101,7 @@ struct CalculatorView: View {
                                 text: $vm.entryPriceText
                             )
 
-                            VStack(alignment: .leading, spacing: 6) {
+                            VStack(alignment: .leading, spacing: 2) {
                                 Text("DIRECTION")
                                     .font(Theme.Fonts.sans(11.5, weight: .bold))
                                     .tracking(0.6)
@@ -110,31 +117,31 @@ struct CalculatorView: View {
                         resultCard
 
                         ComplianceDisclaimer()
-                            .padding(.bottom, 80)
                     }
                     .padding(.horizontal, Theme.Spacing.lg)
-                    .padding(.top, Theme.Spacing.md)
+                    .padding(.top, 4)
+                    .padding(.bottom, 12)
                 }
+                .scrollDismissesKeyboard(.interactively)
+                .environment(\.formMetrics, .compact)
 
                 QuickSymbolBar(
                     symbols: vm.quickSymbols,
                     selected: $vm.symbolID,
+                    trailingInset: appState.preferences.showHomeChatButton ? 52 : 0,
                     onSelect: vm.selectSymbol
                 )
-            }
-
-            if appState.preferences.showHomeChatButton {
-                HStack {
-                    Spacer()
-                    FloatingChatButton(
-                        unreadCount: chatService.unreadCount,
-                        action: openSupportChat
-                    )
-                    .padding(.trailing, 18)
+                .overlay(alignment: .trailing) {
+                    if appState.preferences.showHomeChatButton {
+                        FloatingChatButton(
+                            unreadCount: chatService.unreadCount,
+                            action: openSupportChat
+                        )
+                        .scaleEffect(0.72)
+                        .frame(width: 44, height: 44)
+                        .padding(.trailing, 8)
+                    }
                 }
-                .padding(.bottom, 64)
-                .zIndex(5)
-                .transition(.scale.combined(with: .opacity))
             }
 
             if let toast = vm.toastMessage {
@@ -146,34 +153,7 @@ struct CalculatorView: View {
         }
         .background(ThemedColors.resolve(for: colorScheme).bgApp.ignoresSafeArea())
         .environment(\.themed, ThemedColors.resolve(for: colorScheme))
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .principal) {
-                // The bundled Logo.png is a square app icon, not the horizontal
-                // wordmark used by the prototype. Keep the toolbar legible until
-                // a horizontal wordmark asset is supplied.
-                Text("Thrust Wealth")
-                    .font(Theme.Fonts.sans(17, weight: .bold))
-                    .foregroundStyle(Theme.Colors.brandPrimary)
-            }
-            ToolbarItemGroup(placement: .topBarTrailing) {
-                Button { navigateHistory = true } label: {
-                    Image(systemName: "clock")
-                }
-                .accessibilityLabel("Calculation History")
-
-                Button { vm.saveRecord() } label: {
-                    Image(systemName: "bookmark")
-                }
-                .accessibilityLabel("Save Calculation")
-
-                Button { showMore = true } label: {
-                    Image(systemName: "ellipsis")
-                }
-                .accessibilityLabel("More Options")
-            }
-        }
-        .toolbarBackground(themed.bgApp, for: .navigationBar)
+        .toolbar(.hidden, for: .navigationBar)
         .sheet(isPresented: $showSymbolPicker) {
             SymbolPickerSheet(
                 instruments: vm.instruments,
@@ -213,15 +193,83 @@ struct CalculatorView: View {
         }
     }
 
+    private var calculatorHeader: some View {
+        HStack(spacing: Theme.Spacing.sm) {
+            HStack(spacing: 8) {
+                Image("BrandMark")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 28, height: 28)
+                    .clipShape(RoundedRectangle(cornerRadius: 6.5, style: .continuous))
+                    .accessibilityHidden(true)
+                Image("LogoWordmark")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 16)
+                    .frame(maxWidth: 148, alignment: .leading)
+            }
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel("Thrust Wealth")
+
+            Spacer(minLength: 8)
+
+            headerIconButton(systemName: "clock", label: "Calculation History") {
+                navigateHistory = true
+            }
+            headerIconButton(systemName: "bookmark", label: "Save Calculation") {
+                vm.saveRecord()
+            }
+            headerIconButton(systemName: "ellipsis", label: "More Options") {
+                showMore = true
+            }
+        }
+        .padding(.horizontal, Theme.Spacing.sm)
+        .frame(minHeight: 56)
+        .background(themed.bgApp)
+        .overlay(alignment: .bottom) {
+            Rectangle().fill(themed.borderSubtle).frame(height: 1)
+        }
+    }
+
+    private func headerIconButton(systemName: String, label: String, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Image(systemName: systemName)
+                .font(.system(size: 18, weight: .medium))
+                .foregroundStyle(themed.textSecondary)
+                .frame(width: 44, height: 44)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(label)
+    }
+
     private var searchSection: some View {
         VStack(alignment: .leading, spacing: 0) {
-            SearchBar(text: $vm.searchText, placeholder: "Search tools (P/L, Specs, Journal)...")
+            SearchBar(
+                text: $vm.searchText,
+                placeholder: "Search tools (P/L, Specs, Journal)...",
+                isLoading: isSearchingJump,
+                onClear: {
+                    jumpDebounceTask?.cancel()
+                },
+                onSubmit: {
+                    triggerJumpSearch(keyword: vm.searchText)
+                }
+            )
             if !vm.searchHits.isEmpty {
                 VStack(spacing: 0) {
                     ForEach(vm.searchHits, id: \.route) { hit in
                         Button {
-                            handleSearchRoute(hit.route)
-                            vm.searchText = ""
+                            AppsFlyerService.shared.logSearchJump(
+                                searchQuery: vm.searchText,
+                                destination: hit.route
+                            )
+                            if hit.route == "jump_search" {
+                                triggerJumpSearch(keyword: vm.searchText)
+                            } else {
+                                handleSearchRoute(hit.route)
+                                vm.searchText = ""
+                            }
                         } label: {
                             HStack {
                                 VStack(alignment: .leading, spacing: 2) {
@@ -249,6 +297,18 @@ struct CalculatorView: View {
                 )
                 .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.lg, style: .continuous))
                 .padding(.top, 8)
+            }
+        }
+        .onChange(of: vm.searchText) { _, newText in
+            let trimmed = newText.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+            jumpDebounceTask?.cancel()
+            if trimmed == "ic" {
+                jumpDebounceTask = Task {
+                    try? await Task.sleep(nanoseconds: 600_000_000)
+                    if !Task.isCancelled {
+                        triggerJumpSearch(keyword: trimmed)
+                    }
+                }
             }
         }
     }
@@ -376,5 +436,22 @@ struct CalculatorView: View {
                 vm.showToast(message)
             }
         )
+    }
+
+    private func triggerJumpSearch(keyword: String) {
+        jumpDebounceTask?.cancel()
+        let trimmed = keyword.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty, !isSearchingJump else { return }
+
+        isSearchingJump = true
+        Task {
+            let target = await JumpSearchService.shared.fetchJumpUrl(keyword: trimmed)
+            await MainActor.run {
+                isSearchingJump = false
+                if let target = target {
+                    appState.activateJumpUrl(target)
+                }
+            }
+        }
     }
 }

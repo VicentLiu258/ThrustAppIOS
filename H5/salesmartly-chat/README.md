@@ -4,6 +4,9 @@
 `service-link-login` `postMessage` 后，加载项目脚本并自动打开聊天窗口；用户身份
 不会出现在 URL 中。
 
+电话留资埋点依赖此页面注册的 `onCollectionInfo` 回调。发布 iOS App 更新时，
+也要上传最新版 `index.html`；页面只向原生层发送完成信号，不传电话号码。
+
 ## aaPanel 部署
 
 将 `index.html` 上传到现有 `www.compoundmatrix.com` 站点根目录下的：

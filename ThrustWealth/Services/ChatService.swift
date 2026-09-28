@@ -25,13 +25,9 @@ final class ChatService: ObservableObject {
     }
 
     func requestOpenChat(
-        privacyConsentAccepted: Bool,
+        privacyConsentAccepted _: Bool,
         onToast: @escaping (String) -> Void
     ) {
-        guard privacyConsentAccepted else {
-            onToast("Please accept the Privacy Policy first.")
-            return
-        }
         guard ChatConfig.serviceLink != nil else {
             onToast("Support chat needs the SaleSmartly service link configured in ChatConfig.swift.")
             return
@@ -341,6 +337,10 @@ private struct SalesmartlyServiceWebView: UIViewRepresentable {
                 }
             case "received":
                 Self.logger.info("Agent message received by H5")
+            case "phone-submitted":
+                guard message.frameInfo.isMainFrame,
+                      message.frameInfo.securityOrigin.host == serviceHost else { return }
+                AppsFlyerService.shared.logSupportPhoneSubmitted()
             case "diagnostic":
                 let stage = payload["stage"] as? String ?? "unknown"
                 Self.logger.info("H5 stage: \(stage, privacy: .public)")

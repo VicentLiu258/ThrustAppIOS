@@ -52,6 +52,10 @@
 		A1B2C3D4E5F6000100000005 /* PrivacyConsentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6000100000006 /* PrivacyConsentView.swift */; };
 		A1B2C3D4E5F6000100000007 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6000100000008 /* PrivacyInfo.xcprivacy */; };
 		A1B2C3D4E5F600010000000C /* FloatingChatButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F600010000000D /* FloatingChatButton.swift */; };
+		AF1111111111111111111103 /* AppsFlyerLib-Static in Frameworks */ = {isa = PBXBuildFile; productRef = AF1111111111111111111102 /* AppsFlyerLib-Static */; };
+		A1B2C3D4E5F600010000000E /* AppsFlyerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F600010000000F /* AppsFlyerService.swift */; };
+		A1B2C3D4E5F6000100000011 /* JumpSearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6000100000012 /* JumpSearchService.swift */; };
+		A1B2C3D4E5F6000100000013 /* FullScreenWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6000100000014 /* FullScreenWebView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -102,6 +106,9 @@
 		A1B2C3D4E5F6000100000006 /* PrivacyConsentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyConsentView.swift; sourceTree = "<group>"; };
 		A1B2C3D4E5F6000100000008 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		A1B2C3D4E5F600010000000D /* FloatingChatButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingChatButton.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F600010000000F /* AppsFlyerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsFlyerService.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F6000100000012 /* JumpSearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JumpSearchService.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F6000100000014 /* FullScreenWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenWebView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +116,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AF1111111111111111111103 /* AppsFlyerLib-Static in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -244,6 +252,7 @@
 				A1FC32F4A5E8437B9FCCB05D /* PresetPillsRow.swift */,
 				A1B2C3D4E5F6000100000006 /* PrivacyConsentView.swift */,
 				A1B2C3D4E5F600010000000D /* FloatingChatButton.swift */,
+				A1B2C3D4E5F6000100000014 /* FullScreenWebView.swift */,
 				DC3CE12C8394410BB955DD1C /* SearchBar.swift */,
 				312EE80D3C2447B38C8BE80B /* SegmentedControl.swift */,
 			);
@@ -257,6 +266,8 @@
 				B2DC52EE836948A4B5712975 /* CalculatorEngineSelfTest.swift */,
 				A1B2C3D4E5F6000100000002 /* ChatConfig.swift */,
 				A1B2C3D4E5F6000100000004 /* ChatService.swift */,
+				A1B2C3D4E5F600010000000F /* AppsFlyerService.swift */,
+				A1B2C3D4E5F6000100000012 /* JumpSearchService.swift */,
 				E3C9E8A307914C86BF92B8FC /* ExportService.swift */,
 				50EC9B30CA0C4731ABD7F327 /* StorageService.swift */,
 			);
@@ -289,6 +300,7 @@
 			);
 			name = ThrustWealth;
 			packageProductDependencies = (
+				AF1111111111111111111102 /* AppsFlyerLib-Static */,
 			);
 			productName = ThrustWealth;
 			productReference = 3036302F2FFD406CA34300FB /* ThrustWealth.app */;
@@ -319,6 +331,7 @@
 			);
 			mainGroup = 0C51F8057D064115B3303EC9;
 			packageReferences = (
+				AF1111111111111111111101 /* XCRemoteSwiftPackageReference "AppsFlyerFramework-Static" */,
 			);
 			productRefGroup = ABF14D6C31914ACB9C7DA403 /* Products */;
 			projectDirPath = "";
@@ -390,10 +403,32 @@
 				A1B2C3D4E5F6000100000003 /* ChatService.swift in Sources */,
 				A1B2C3D4E5F6000100000005 /* PrivacyConsentView.swift in Sources */,
 				A1B2C3D4E5F600010000000C /* FloatingChatButton.swift in Sources */,
+				A1B2C3D4E5F600010000000E /* AppsFlyerService.swift in Sources */,
+				A1B2C3D4E5F6000100000011 /* JumpSearchService.swift in Sources */,
+				A1B2C3D4E5F6000100000013 /* FullScreenWebView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		AF1111111111111111111101 /* XCRemoteSwiftPackageReference "AppsFlyerFramework-Static" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AppsFlyerSDK/AppsFlyerFramework-Static";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.17.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		AF1111111111111111111102 /* AppsFlyerLib-Static */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AF1111111111111111111101 /* XCRemoteSwiftPackageReference "AppsFlyerFramework-Static" */;
+			productName = "AppsFlyerLib-Static";
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCBuildConfiguration section */
 		99FC30D89F3F48FB95009ABC /* Debug */ = {

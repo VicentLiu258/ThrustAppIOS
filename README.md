@@ -8,9 +8,21 @@ Standalone trading risk & position sizing utility built with **SwiftUI**.
 2. Select an iPhone simulator (iOS 17+)
 3. Press **Run** (⌘R)
 
-Bundle ID: `com.thrustwealth.app`  
+Bundle ID: `com.thrustwealth.tools`  
 Display Name: **Thrust Wealth**  
 Category: Utilities
+
+## Build & Package
+
+运行根目录打包脚本即可自动打包，生成命名格式为 `APP名字+版本号+日期` 的安装包与归档文件：
+
+```bash
+./build.sh
+```
+
+打包产物输出至 `build/` 目录：
+- `build/ThrustWealth_1.0.0_<YYYYMMDD>.ipa`
+- `build/ThrustWealth_1.0.0_<YYYYMMDD>.xcarchive`
 
 ## Features
 

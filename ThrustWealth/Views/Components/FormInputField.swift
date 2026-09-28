@@ -1,5 +1,24 @@
 import SwiftUI
 
+struct FormMetrics {
+    var fieldHeight: CGFloat
+    var labelSpacing: CGFloat
+
+    static let regular = FormMetrics(fieldHeight: 46, labelSpacing: 6)
+    static let compact = FormMetrics(fieldHeight: 40, labelSpacing: 2)
+}
+
+private struct FormMetricsKey: EnvironmentKey {
+    static let defaultValue = FormMetrics.regular
+}
+
+extension EnvironmentValues {
+    var formMetrics: FormMetrics {
+        get { self[FormMetricsKey.self] }
+        set { self[FormMetricsKey.self] = newValue }
+    }
+}
+
 struct FormInputField: View {
     let label: String
     var hint: String? = nil
@@ -12,10 +31,11 @@ struct FormInputField: View {
     var isDisabled: Bool = false
 
     @Environment(\.themed) private var themed
+    @Environment(\.formMetrics) private var metrics
     @FocusState private var focused: Bool
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
+        VStack(alignment: .leading, spacing: metrics.labelSpacing) {
             HStack {
                 Text(label.uppercased())
                     .font(Theme.Fonts.sans(11.5, weight: .bold))
@@ -42,7 +62,7 @@ struct FormInputField: View {
                     .font(Theme.Fonts.mono(15, weight: .bold))
                     .foregroundStyle(themed.textPrimary)
                     .padding(.horizontal, Theme.Spacing.md)
-                    .frame(height: 46)
+                    .frame(height: metrics.fieldHeight)
                     .focused($focused)
                     .disabled(isDisabled)
                     .accessibilityLabel(label)
@@ -93,9 +113,10 @@ struct FormDropdownField: View {
     let action: () -> Void
 
     @Environment(\.themed) private var themed
+    @Environment(\.formMetrics) private var metrics
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
+        VStack(alignment: .leading, spacing: metrics.labelSpacing) {
             HStack {
                 Text(label.uppercased())
                     .font(Theme.Fonts.sans(11.5, weight: .bold))
@@ -121,7 +142,7 @@ struct FormDropdownField: View {
                         .foregroundStyle(themed.textTertiary)
                 }
                 .padding(.horizontal, Theme.Spacing.md)
-                .frame(height: 46)
+                .frame(height: metrics.fieldHeight)
                 .background(themed.bgSurface)
                 .overlay(
                     RoundedRectangle(cornerRadius: Theme.Radius.md, style: .continuous)

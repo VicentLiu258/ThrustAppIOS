@@ -110,6 +110,7 @@ struct PLCalculatorView: View {
         .environment(\.themed, ThemedColors.resolve(for: colorScheme))
         .navigationTitle("P/L Calculator")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar(.visible, for: .navigationBar)
         .toolbar {
             ToolbarItemGroup(placement: .topBarTrailing) {
                 Button { vm.reset() } label: { Image(systemName: "trash") }

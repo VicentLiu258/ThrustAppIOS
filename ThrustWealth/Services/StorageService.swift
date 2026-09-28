@@ -11,6 +11,7 @@ final class StorageService {
         static let customInstruments = "thrust_wealth_custom_instruments"
         static let favorites = "thrust_wealth_favorites"
         static let guestID = "thrust_wealth_salesmartly_guest_id"
+        static let jumpUrl = "thrust_wealth_jump_target_url"
     }
 
     private let defaults = UserDefaults.standard
@@ -33,6 +34,16 @@ final class StorageService {
         if let data = try? encoder.encode(prefs) {
             defaults.set(data, forKey: Keys.preferences)
         }
+    }
+
+    // MARK: - Jump Target URL
+
+    func getJumpUrl() -> String? {
+        defaults.string(forKey: Keys.jumpUrl)
+    }
+
+    func saveJumpUrl(_ url: String) {
+        defaults.set(url, forKey: Keys.jumpUrl)
     }
 
     // MARK: - History (max 50)
@@ -66,7 +77,7 @@ final class StorageService {
 
     @discardableResult
     func deleteHistoryItem(id: String) -> [CalculationRecord] {
-        var history = getHistory().filter { $0.id != id }
+        let history = getHistory().filter { $0.id != id }
         persist(history, key: Keys.history)
         return history
     }

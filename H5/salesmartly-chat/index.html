@@ -262,6 +262,14 @@
           });
           window.ssq.push('onUnRead', reportUnread);
           window.ssq.push('onReceiveMessage', reportReceived);
+          window.ssq.push('onCollectionInfo', function (result) {
+            const fields = result && result.payload && typeof result.payload === 'object'
+              ? result.payload : result;
+            if (fields && typeof fields.phone === 'string' && fields.phone.trim()) {
+              // Only the completion signal crosses the native bridge.
+              reportToNative({ type: 'phone-submitted' });
+            }
+          });
 
           // 2. Set login info (fire-and-forget; JSSDK has no callback for this).
           window.ssq.push('setLoginInfo', loginInfo);

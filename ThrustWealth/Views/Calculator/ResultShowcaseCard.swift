@@ -16,6 +16,28 @@ struct ResultShowcaseCard: View {
 
     @Environment(\.themed) private var themed
 
+    private func statCell(_ stat: (String, String, Color?)) -> some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(stat.0.uppercased())
+                .font(Theme.Fonts.sans(10.5, weight: .bold))
+                .tracking(0.5)
+                .foregroundStyle(themed.textMuted)
+            Text(stat.1)
+                .font(Theme.Fonts.mono(15, weight: .heavy))
+                .foregroundStyle(stat.2 ?? themed.textPrimary)
+                .lineLimit(2)
+                .minimumScaleFactor(0.7)
+        }
+        .padding(10)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Color.white.opacity(0.02))
+        .overlay(
+            RoundedRectangle(cornerRadius: Theme.Radius.sm, style: .continuous)
+                .strokeBorder(themed.borderSubtle, lineWidth: 1)
+        )
+        .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.sm, style: .continuous))
+    }
+
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack {
@@ -63,29 +85,18 @@ struct ResultShowcaseCard: View {
                     )
                 )
                 .frame(height: 1)
-                .padding(.vertical, Theme.Spacing.md)
+                .padding(.vertical, Theme.Spacing.sm)
 
-            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: Theme.Spacing.md) {
-                ForEach(Array(stats.enumerated()), id: \.offset) { _, stat in
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text(stat.0.uppercased())
-                            .font(Theme.Fonts.sans(10.5, weight: .bold))
-                            .tracking(0.5)
-                            .foregroundStyle(themed.textMuted)
-                        Text(stat.1)
-                            .font(Theme.Fonts.mono(15, weight: .heavy))
-                            .foregroundStyle(stat.2 ?? themed.textPrimary)
-                            .lineLimit(2)
-                            .minimumScaleFactor(0.8)
+            VStack(spacing: Theme.Spacing.sm) {
+                let pairCount = stats.count / 2
+                ForEach(0..<pairCount, id: \.self) { row in
+                    HStack(spacing: Theme.Spacing.sm) {
+                        statCell(stats[row * 2])
+                        statCell(stats[row * 2 + 1])
                     }
-                    .padding(10)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(Color.white.opacity(0.02))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: Theme.Radius.sm, style: .continuous)
-                            .strokeBorder(themed.borderSubtle, lineWidth: 1)
-                    )
-                    .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.sm, style: .continuous))
+                }
+                if stats.count % 2 == 1, let last = stats.last {
+                    statCell(last)
                 }
             }
             .opacity(isValid ? 1 : 0.45)
@@ -102,10 +113,11 @@ struct ResultShowcaseCard: View {
                         actionButton(title: primaryTitle, systemImage: primarySystemImage, style: .primary, action: onPrimary)
                     }
                 }
-                .padding(.top, Theme.Spacing.md)
+                .padding(.top, Theme.Spacing.sm)
             }
         }
-        .padding(Theme.Spacing.lg)
+        .padding(.horizontal, Theme.Spacing.lg)
+        .padding(.vertical, 12)
         .background(
             LinearGradient(
                 colors: [themed.bgSurfaceElevated, themed.bgSurface],

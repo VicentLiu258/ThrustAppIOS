@@ -4,6 +4,7 @@ import SwiftUI
 struct PrivacyConsentView: View {
     let onAccept: () -> Void
     let onViewPrivacy: () -> Void
+    var onViewTerms: (() -> Void)? = nil
 
     @Environment(\.themed) private var themed
     @Environment(\.colorScheme) private var colorScheme
@@ -35,6 +36,7 @@ struct PrivacyConsentView: View {
                         bullet("Local calculator data stays on device")
                         bullet("Support chat may collect OS version, app version, device model, network type, and IP address")
                         bullet("Images/videos are sent only when you choose to attach them in chat")
+                        bullet("AppsFlyer may collect device identifiers to measure installs, search navigation, and phone submissions in support chat; it does not receive the phone number")
                     }
                     .padding(Theme.Spacing.lg)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -61,16 +63,29 @@ struct PrivacyConsentView: View {
                     }
                     .buttonStyle(.plain)
 
-                    Button(action: onViewPrivacy) {
-                        Text("View Privacy Policy")
-                            .font(Theme.Fonts.sans(14, weight: .semibold))
-                            .foregroundStyle(themed.accentText)
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 12)
-                    }
-                    .buttonStyle(.plain)
+                    HStack(spacing: 12) {
+                        Button(action: onViewPrivacy) {
+                            Text("Privacy Policy")
+                                .font(Theme.Fonts.sans(13.5, weight: .semibold))
+                                .foregroundStyle(themed.accentText)
+                        }
+                        .buttonStyle(.plain)
 
-                    Text("By continuing you agree to the Privacy Policy and Terms of Service. You can open support chat later from Settings.")
+                        Text("•")
+                            .foregroundStyle(themed.textMuted)
+
+                        Button {
+                            onViewTerms?()
+                        } label: {
+                            Text("Terms of Use")
+                                .font(Theme.Fonts.sans(13.5, weight: .semibold))
+                                .foregroundStyle(themed.accentText)
+                        }
+                        .buttonStyle(.plain)
+                    }
+                    .padding(.vertical, 8)
+
+                    Text("By continuing you agree to the Privacy Policy and Terms of Use. You can open support chat later from Settings.")
                         .font(Theme.Fonts.sans(11))
                         .foregroundStyle(themed.textMuted)
                         .multilineTextAlignment(.center)

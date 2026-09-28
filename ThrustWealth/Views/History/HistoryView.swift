@@ -64,6 +64,7 @@ struct HistoryView: View {
         .environment(\.themed, ThemedColors.resolve(for: colorScheme))
         .navigationTitle("Calculation History")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar(.visible, for: .navigationBar)
         .toolbar {
             ToolbarItemGroup(placement: .topBarTrailing) {
                 Button { vm.exportCSV() } label: { Image(systemName: "square.and.arrow.up") }

@@ -95,6 +95,7 @@ struct ToolsListView: View {
                     .font(.system(size: 22, weight: .semibold))
                     .foregroundStyle(themed.textMuted)
             }
+
             VStack(alignment: .leading, spacing: 3) {
                 Text(title)
                     .font(Theme.Fonts.sans(16, weight: .bold))
@@ -102,16 +103,24 @@ struct ToolsListView: View {
                 Text(desc)
                     .font(Theme.Fonts.sans(12.5))
                     .foregroundStyle(themed.textSecondary)
+                    .multilineTextAlignment(.leading)
+                    .fixedSize(horizontal: false, vertical: true)
             }
-            Spacer()
+
+            Spacer(minLength: 0)
         }
         .padding(Theme.Spacing.lg)
-        .background(themed.bgSurface)
+        .background(
+            LinearGradient(colors: [themed.bgSurfaceElevated, themed.bgSurface], startPoint: .topLeading, endPoint: .bottomTrailing)
+        )
         .overlay(
             RoundedRectangle(cornerRadius: Theme.Radius.xl, style: .continuous)
                 .strokeBorder(themed.borderSubtle, lineWidth: 1)
         )
         .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.xl, style: .continuous))
         .opacity(0.6)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(title), coming in a later version")
+        .accessibilityAddTraits(.isStaticText)
     }
 }
